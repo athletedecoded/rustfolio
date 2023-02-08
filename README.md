@@ -1,11 +1,17 @@
 # Rustfolio 🦀
 
-Live @ [https://athletedecoded/rustfolio](https://athletedecoded/rustfolio)
+Check it out live @ [https://athletedecoded.com/rustfolio](https://athletedecoded.com/rustfolio)
 
 Learning by building Rust for MLOps projects at Duke Univeristy with [Noah Gift](https://github.com/noahgift).
 
 
 ### To use this mdbook template
+
+
+**Clone Repo**
+```
+$ git clone https://github.com/athletedecoded/rustfolio.git
+```
 
 **Install mdbook**
 ```
@@ -15,6 +21,14 @@ $ make install
 **Preview mdbook**
 ```
 $ make serve
+```
+
+**Deploy to Github Pages**
+
+Automatic CI/CD via Github Actions on git push. See [.github/workflows/deploy.yml](.github/workflows/deploy.yml)
+
+```
+$ git push origin main
 ```
 
 ## References
