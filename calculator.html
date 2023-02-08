@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Rustfolio - rustfolio</title>
+        <title>Mini Calculator - rustfolio</title>
 
 
         <!-- Custom HTML head -->
@@ -80,7 +80,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="rustfolio.html" class="active"><strong aria-hidden="true">1.</strong> Rustfolio</a></li><li class="chapter-item expanded "><a href="s3_cli.html"><strong aria-hidden="true">2.</strong> AWS S3 CLI in Rust</a></li><li class="chapter-item expanded "><a href="worldclock.html"><strong aria-hidden="true">3.</strong> Mini World Clock</a></li><li class="chapter-item expanded "><a href="calculator.html"><strong aria-hidden="true">4.</strong> Mini Calculator</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="rustfolio.html"><strong aria-hidden="true">1.</strong> Rustfolio</a></li><li class="chapter-item expanded "><a href="s3_cli.html"><strong aria-hidden="true">2.</strong> AWS S3 CLI in Rust</a></li><li class="chapter-item expanded "><a href="worldclock.html"><strong aria-hidden="true">3.</strong> Mini World Clock</a></li><li class="chapter-item expanded "><a href="calculator.html" class="active"><strong aria-hidden="true">4.</strong> Mini Calculator</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -141,30 +141,32 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="rustfolio-"><a class="header" href="#rustfolio-">Rustfolio 🦀</a></h1>
-<p>Learning by building Rust for MLOps projects at Duke Univeristy with <a href="https://github.com/noahgift">Noah Gift</a>.</p>
-<h3 id="to-use-this-mdbook-template"><a class="header" href="#to-use-this-mdbook-template">To use this mdbook template</a></h3>
-<p><strong>Install mdbook</strong></p>
-<pre><code>$ make install
-</code></pre>
-<p><strong>Preview mdbook</strong></p>
-<pre><code>$ make serve
-</code></pre>
-<h2 id="references"><a class="header" href="#references">References</a></h2>
+                        <h1 id="basic-calculator"><a class="header" href="#basic-calculator">Basic Calculator</a></h1>
+<p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/rust-mlops/tree/main/calculator">https://github.com/athletedecoded/rust-mlops</a></p>
+<p>A basic CLI calculator that supports the operators: </p>
 <ul>
-<li><a href="https://rust-lang.github.io/mdBook/">mdBook Official Docs</a></li>
-<li><a href="https://github.com/rust-lang/mdBook/wiki/Automated-Deployment%3A-GitHub-Actions">mdBook Automated Deployment with Github Actions</a></li>
-<li><a href="https://github.com/marketplace/actions/github-pages-action#%EF%B8%8F-mdbook-rust">peaceiris Github Actions for mdBook</a></li>
+<li>Add: &quot;+&quot;</li>
+<li>Subract: &quot;-&quot;</li>
+<li>Multiply: &quot;x&quot;</li>
+<li>Divide: &quot;/&quot;</li>
 </ul>
+<h3 id="useage"><a class="header" href="#useage">Useage</a></h3>
+<pre><code>$ cd calculator
+$ cargo run calc --a &lt;float&gt; --b &lt;float&gt; --op &lt;operator&gt;
+# ex. cargo run calc --a 3 --b 5 --op x
+</code></pre>
+<h3 id="unit-tests"><a class="header" href="#unit-tests">Unit Tests</a></h3>
+<pre><code>$ make test
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-
-                            <a rel="next" href="s3_cli.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
+                            <a rel="prev" href="worldclock.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
                             </a>
+
 
                         <div style="clear: both"></div>
                     </nav>
@@ -172,10 +174,10 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-
-                    <a rel="next" href="s3_cli.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
+                    <a rel="prev" href="worldclock.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
                     </a>
+
             </nav>
 
         </div>
