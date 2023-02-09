@@ -32,6 +32,7 @@
 
     </head>
     <body>
+    <div id="body-container">
         <!-- Provide site root to javascript -->
         <script>
             var path_to_root = "";
@@ -158,6 +159,9 @@
 <p>Automatic CI/CD via Github Actions on git push. See <a href=".github/workflows/deploy.yml">.github/workflows/deploy.yml</a></p>
 <pre><code>$ git push origin main
 </code></pre>
+<p><strong>Configure Repo for Github Pages</strong></p>
+<p>Ensure repository is serving from <code>gh-pages</code> branch</p>
+<p><img src="./assets/pages.png" alt="image" /></p>
 <h2 id="references"><a class="header" href="#references">References</a></h2>
 <ul>
 <li><a href="https://rust-lang.github.io/mdBook/">mdBook Official Docs</a></li>
@@ -207,5 +211,6 @@
         <!-- Custom JS scripts -->
 
 
+    </div>
     </body>
 </html>
