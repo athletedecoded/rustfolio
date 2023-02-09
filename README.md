@@ -1,3 +1,5 @@
+![GH Pages Deploy](https://github.com/athletedecoded/rustfolio/actions/workflows/deploy.yml/badge.svg)
+
 # Rustfolio 🦀
 
 Check it out live @ [https://athletedecoded.com/rustfolio](https://athletedecoded.com/rustfolio)
@@ -7,11 +9,9 @@ Learning by building Rust for MLOps projects at Duke Univeristy with [Noah Gift]
 
 ### To use this mdbook template
 
+**Fork/clone from Github Repo**
 
-**Clone Repo**
-```
-$ git clone https://github.com/athletedecoded/rustfolio.git
-```
+[https://github.com/athletedecoded/rustfolio](https://github.com/athletedecoded/rustfolio)
 
 **Install mdbook**
 ```
@@ -31,8 +31,18 @@ Automatic CI/CD via Github Actions on git push. See [.github/workflows/deploy.ym
 $ git push origin main
 ```
 
+**Configure Repo for Github Pages**
+
+Ensure repository is serving from `gh-pages` branch
+
+![image](./src/assets/pages.png)
+
 ## References
 
 * [mdBook Official Docs](https://rust-lang.github.io/mdBook/)
 * [mdBook Automated Deployment with Github Actions](https://github.com/rust-lang/mdBook/wiki/Automated-Deployment%3A-GitHub-Actions)
 * [peaceiris Github Actions for mdBook](https://github.com/marketplace/actions/github-pages-action#%EF%B8%8F-mdbook-rust)
+
+<hr>
+
+### Credits: [athletedecoded](https://github.com/athletedecoded)
