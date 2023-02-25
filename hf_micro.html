@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Mini World Clock - rustfolio</title>
+        <title>Dockerized API Proxy for HuggingFace - rustfolio</title>
 
 
         <!-- Custom HTML head -->
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="rustfolio.html"><strong aria-hidden="true">1.</strong> Rustfolio</a></li><li class="chapter-item expanded "><a href="s3_cli.html"><strong aria-hidden="true">2.</strong> AWS S3 CLI in Rust</a></li><li class="chapter-item expanded "><a href="hf_micro.html"><strong aria-hidden="true">3.</strong> Dockerized API Proxy for HuggingFace</a></li><li class="chapter-item expanded "><a href="multithread.html"><strong aria-hidden="true">4.</strong> Mini Multithreading</a></li><li class="chapter-item expanded "><a href="worldclock.html" class="active"><strong aria-hidden="true">5.</strong> Mini World Clock</a></li><li class="chapter-item expanded "><a href="calculator.html"><strong aria-hidden="true">6.</strong> Mini Calculator</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="rustfolio.html"><strong aria-hidden="true">1.</strong> Rustfolio</a></li><li class="chapter-item expanded "><a href="s3_cli.html"><strong aria-hidden="true">2.</strong> AWS S3 CLI in Rust</a></li><li class="chapter-item expanded "><a href="hf_micro.html" class="active"><strong aria-hidden="true">3.</strong> Dockerized API Proxy for HuggingFace</a></li><li class="chapter-item expanded "><a href="multithread.html"><strong aria-hidden="true">4.</strong> Mini Multithreading</a></li><li class="chapter-item expanded "><a href="worldclock.html"><strong aria-hidden="true">5.</strong> Mini World Clock</a></li><li class="chapter-item expanded "><a href="calculator.html"><strong aria-hidden="true">6.</strong> Mini Calculator</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -142,67 +142,124 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="world-clock-with-aws-lambda"><a class="header" href="#world-clock-with-aws-lambda">World Clock with AWS Lambda</a></h1>
-<p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/rust-mlops/tree/main/worldclock">https://github.com/athletedecoded/rust-mlops</a></p>
-<h2 id="useage"><a class="header" href="#useage">Useage</a></h2>
-<p>AWS Lambda function that takes a timezone code as request parameter and returns the local date and time. Currently supports AEST, EST, PST, MST. Defaults to UTC if blank request parameter.</p>
-<p><strong>Example</strong></p>
-<pre><code># request
-{
-  &quot;tz_code&quot;: &quot;AEST&quot;
-}
-
-# response
-{
-  &quot;req_id&quot;: &quot;2b0d6b70-09d8-4a78-8180-e1abe33eb5fb&quot;,
-  &quot;msg&quot;: &quot;It is 08 February 2023 6:33:39 AM in AEST&quot;
-}
+                        <h1 id="dockerized-api-proxy-microservice-for-huggingface"><a class="header" href="#dockerized-api-proxy-microservice-for-huggingface">Dockerized API Proxy Microservice for HuggingFace</a></h1>
+<p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/hf-micro">https://github.com/athletedecoded/hf-micro</a></p>
+<p>The <a href="https://github.com/huggingface/huggingface_hub">HuggingFace Hub</a> is implemented as a Python wrapper around the HuggingFace API Endpoints. This project is a dockerized Rust microservice that acts as an API proxy for the HuggingFace API Endpoints. </p>
+<p><img src="./assets/hf-micro.png" alt="image" /></p>
+<h2 id="what-i-learnt"><a class="header" href="#what-i-learnt">What I Learnt</a></h2>
+<ul>
+<li>Configuring reqwest for GET, POST, PUT, DELETE requests</li>
+<li>Certifying HTTPS using reqwest from within a Docker image -- I spent days debugging and exhausting certification solutions and it all came down to enabling the rustls-tls feature in reqwest and installing debian ca-certificates 🤯</li>
+</ul>
+<h2 id="setup"><a class="header" href="#setup">Setup</a></h2>
+<p><strong>Install</strong></p>
+<pre><code>$ make install
 </code></pre>
-<h2 id="developer-notes"><a class="header" href="#developer-notes">Developer Notes</a></h2>
-<p><strong>Configure AWS IAM Role</strong></p>
+<p><strong>HuggingFace Access Token</strong></p>
 <ol>
-<li>Create an AWS IAM User policy with <code>AWSLambda_FullAccess</code> permissions</li>
-<li>Configure your ~/.aws/credentials file with environment variables: <code>aws_access_key_id</code>, <code>aws_secret_access_key</code>, <code>aws_role_arn</code>. </li>
+<li>Generate a <a href="https://huggingface.co/docs/hub/security-tokens">HuggingFace personal access token</a> with write permissions</li>
+<li>Configure environment variables below per choice of launching locally or within Docker</li>
 </ol>
-<p><em>Note: <code>aws_role_arn</code> is copied from the IAM user summary and is formatted as arn:aws:iam::&lt;aws_acct&gt;:user/&lt;iam_user&gt;</em></p>
-<p><strong>Install Cargo Lambda</strong></p>
-<pre><code>$ sudo apt-get install python3-venv
-$ python3 -m venv ~/.venv
-$ source ~/.venv/bin/activate
-$ pip3 install cargo-lambda
+<p><strong>To launch locally</strong></p>
+<ol>
+<li>Rename <code>SAMPLE_ENV</code> to <code>.env</code> and save</li>
+<li>Set your HF personal access token in <code>.env</code></li>
+<li>Run local microservice on localhost:8080</li>
+</ol>
+<pre><code>$ make run
 </code></pre>
-<p><strong>Activate .venv</strong> </p>
-<pre><code>$ source ~/.venv/bin/activate
+<p><strong>To launch within Docker</strong></p>
+<ol>
+<li>Set your HF personal access token in <a href="./hf-micro/Makefile">Makefile (line 2)</a></li>
+<li>Build Docker image</li>
+</ol>
+<pre><code>$ make build
 </code></pre>
-<p><strong>Build Binary</strong></p>
-<p><em>For x86_64</em></p>
+<ol start="3">
+<li>Run Docker image</li>
+</ol>
+<pre><code>$ make rundocker
+</code></pre>
+<p><strong>Docker Debugging CA-Certificates</strong></p>
+<p>If you have CA-certification issues you may need to manually mount self-signed certificates to the Docker image instead. To do this first generate .pem certificate</p>
+<pre><code># make local certs dir
+$ mkdir ./certs
+# generate ca-certificates
+$ openssl req -x509 -newkey rsa:4096 -keyout ./certs/key.pem -out ./certs/cert.pem -sha256 -days 365 -nodes -subj '/CN=localhost'
+</code></pre>
+<p>Then launch Docker image with mounted certificates</p>
+<pre><code>$ make mntcerts
+</code></pre>
+<p><strong>Generate Rust Binary</strong></p>
 <pre><code>$ make release
 </code></pre>
-<p><em>For arm64</em></p>
-<pre><code>$ make release-arm
+<h2 id="useage--endpoints"><a class="header" href="#useage--endpoints">Useage &amp; Endpoints</a></h2>
+<p>Supported endpoints to base URL https://localhost:8080</p>
+<p><strong>GET /</strong> -- Homepage</p>
+<p><strong>GET /api/account</strong> -- Returns your HuggingFace account info</p>
+<p><strong>POST /api/repo</strong> -- Create a new repository</p>
+<pre><code>```
+POST /api/repo json request body 
+{
+    &quot;type&quot;: &lt;&quot;model&quot;,&quot;dataset&quot; or &quot;spaces&quot;&gt;
+    &quot;name&quot;: &lt;repo_name&gt;,
+    &quot;private&quot;: &lt;true or false&gt;
+}
+```
 </code></pre>
-<p><strong>Invoke Lambda fxn</strong></p>
-<pre><code>$ make invoke
+<p><strong>DELETE /api/repo</strong> -- Delete a repository</p>
+<pre><code>```
+DELETE /api/repo json request body 
+{
+    &quot;type&quot;: &lt;&quot;model&quot;,&quot;dataset&quot; or &quot;spaces&quot;&gt;
+    &quot;name&quot;: &lt;repo_name&gt;
+}
+```
 </code></pre>
-<p><strong>Deploy to AWS Lambda</strong></p>
-<pre><code>$ make deploy
+<p><strong>PUT /api/repo</strong> -- Update repository visibility</p>
+<pre><code>```
+PUT /api/repo json request body 
+{
+    &quot;type&quot;: &lt;&quot;model&quot;,&quot;dataset&quot; or &quot;spaces&quot;&gt;
+    &quot;namespace&quot;: &quot;&lt;username&gt;/&lt;repo_name&gt;&quot; eg. &quot;ferris/my_repo&quot;
+    &quot;private&quot;: &lt;true or false&gt;
+}
+```
 </code></pre>
+<h2 id="todos"><a class="header" href="#todos">ToDos</a></h2>
+<ul>
+<li><input disabled="" type="checkbox" checked=""/>
+Configure GET, POST, DELETE, PUSH routes</li>
+<li><input disabled="" type="checkbox" checked=""/>
+Pass environment variables into Docker per <a href="https://docs.docker.com/compose/environment-variables/set-environment-variables/#set-environment-variables-with-docker-compose-run---env">docs</a></li>
+<li><input disabled="" type="checkbox" checked=""/>
+Debug reqwest x Rust x Docker CA Certificate bug</li>
+<li><input disabled="" type="checkbox" checked=""/>
+Configure Actix logging</li>
+<li><input disabled="" type="checkbox" checked=""/>
+Actix HTTP error response handling</li>
+<li><input disabled="" type="checkbox" checked=""/>
+CI/CD &amp; Binary Release</li>
+</ul>
 <h2 id="references"><a class="header" href="#references">References</a></h2>
 <ul>
-<li><a href="https://github.com/awslabs/aws-lambda-rust-runtime">AWS Lambda Rust Runtime</a></li>
-<li><a href="https://rust-lang-nursery.github.io/rust-cookbook/datetime.html">Rust Date and Time</a></li>
-<li><a href="https://crates.io/crates/chrono-tz">chrono-tz crate docs</a></li>
+<li><a href="https://github.com/huggingface/huggingface_hub">HuggingFace Hub Python Client</a></li>
+<li><a href="https://huggingface.co/docs/hub/security-tokens">HF access tokens</a></li>
+<li><a href="https://huggingface.co/docs/hub/api">HF Hub REST API Endpoints</a></li>
+<li><a href="https://actix.rs/docs/extractors/">Actix extractors</a></li>
+<li><a href="https://crates.io/crates/reqwest">reqwest crate docs</a></li>
+<li><a href="https://smallstep.com/blog/automate-docker-ssl-tls-certificates/">TLS Debugging Docker</a></li>
 </ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="multithread.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="s3_cli.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="calculator.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="multithread.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -212,11 +269,11 @@ $ pip3 install cargo-lambda
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="multithread.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="s3_cli.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="calculator.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="multithread.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
