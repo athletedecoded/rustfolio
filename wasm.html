@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Mini Multithreading - rustfolio</title>
+        <title>Mini wasm Demo - rustfolio</title>
 
 
         <!-- Custom HTML head -->
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="rustfolio.html"><strong aria-hidden="true">1.</strong> Rustfolio</a></li><li class="chapter-item expanded "><a href="s3_cli.html"><strong aria-hidden="true">2.</strong> AWS S3 CLI in Rust</a></li><li class="chapter-item expanded "><a href="hf_micro.html"><strong aria-hidden="true">3.</strong> Dockerized API Proxy for HuggingFace</a></li><li class="chapter-item expanded "><a href="classifier.html"><strong aria-hidden="true">4.</strong> Mini Image Classifier</a></li><li class="chapter-item expanded "><a href="wasm.html"><strong aria-hidden="true">5.</strong> Mini wasm Demo</a></li><li class="chapter-item expanded "><a href="multithread.html" class="active"><strong aria-hidden="true">6.</strong> Mini Multithreading</a></li><li class="chapter-item expanded "><a href="worldclock.html"><strong aria-hidden="true">7.</strong> Mini World Clock</a></li><li class="chapter-item expanded "><a href="calculator.html"><strong aria-hidden="true">8.</strong> Mini Calculator</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="rustfolio.html"><strong aria-hidden="true">1.</strong> Rustfolio</a></li><li class="chapter-item expanded "><a href="s3_cli.html"><strong aria-hidden="true">2.</strong> AWS S3 CLI in Rust</a></li><li class="chapter-item expanded "><a href="hf_micro.html"><strong aria-hidden="true">3.</strong> Dockerized API Proxy for HuggingFace</a></li><li class="chapter-item expanded "><a href="classifier.html"><strong aria-hidden="true">4.</strong> Mini Image Classifier</a></li><li class="chapter-item expanded "><a href="wasm.html" class="active"><strong aria-hidden="true">5.</strong> Mini wasm Demo</a></li><li class="chapter-item expanded "><a href="multithread.html"><strong aria-hidden="true">6.</strong> Mini Multithreading</a></li><li class="chapter-item expanded "><a href="worldclock.html"><strong aria-hidden="true">7.</strong> Mini World Clock</a></li><li class="chapter-item expanded "><a href="calculator.html"><strong aria-hidden="true">8.</strong> Mini Calculator</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -142,35 +142,34 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="parallel-rust-with-rayon"><a class="header" href="#parallel-rust-with-rayon">Parallel Rust with Rayon</a></h1>
-<p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/rust-mlops/tree/main/parallel">https://github.com/athletedecoded/rust-mlops</a></p>
-<p>A program to walk the directory tree and return duplicate files. Walk can be executed in serial or in parallel (with user defined thread option).</p>
+                        <h1 id="wasm-x-rust-for-web-apps"><a class="header" href="#wasm-x-rust-for-web-apps">Wasm x Rust for Web Apps</a></h1>
+<p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/rust-mlops/tree/main/wasm">https://github.com/athletedecoded/rust-mlops</a></p>
+<p>Playing around with wasm bindings to build a Rust web app. This demo generates a random visitor number and renders to the JS front-end.</p>
 <h2 id="useage"><a class="header" href="#useage">Useage</a></h2>
-<pre><code>$ cd parallel
+<p><strong>Install</strong></p>
+<pre><code>$ make install
 </code></pre>
-<p><strong>Serial execution</strong></p>
-<pre><code>$ cargo run serial --path &lt;data_dir&gt;
+<p><strong>Compile wasm Module</strong></p>
+<pre><code>$ make build-wasm
 </code></pre>
-<p><strong>Parallel execution</strong></p>
-<pre><code># Default number of threads
-$ cargo run parallel --path &lt;data_dir&gt;
-
-# For user defined number of threads
-$ cargo run parallel --path &lt;data_dir&gt; --threads &lt;num_threads&gt;
+<p><strong>Serve Web App Locally</strong></p>
+<pre><code>$ make serve
 </code></pre>
-<p><strong>Run Tests</strong></p>
-<pre><code>$ make test
-</code></pre>
+<h2 id="references"><a class="header" href="#references">References</a></h2>
+<ul>
+<li><a href="https://wasmbyexample.dev/examples/hello-world/hello-world.rust.en-us.html">Wasm By Example</a></li>
+<li><a href="https://github.com/nogibjj/rust-mlops-template/tree/main/hello-wasm-bindgen">Hello wasm</a></li>
+</ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="wasm.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="classifier.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="worldclock.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="multithread.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -180,11 +179,11 @@ $ cargo run parallel --path &lt;data_dir&gt; --threads &lt;num_threads&gt;
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="wasm.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="classifier.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="worldclock.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="multithread.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

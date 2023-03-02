@@ -82,7 +82,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="rustfolio.html"><strong aria-hidden="true">1.</strong> Rustfolio</a></li><li class="chapter-item expanded "><a href="s3_cli.html"><strong aria-hidden="true">2.</strong> AWS S3 CLI in Rust</a></li><li class="chapter-item expanded "><a href="hf_micro.html"><strong aria-hidden="true">3.</strong> Dockerized API Proxy for HuggingFace</a></li><li class="chapter-item expanded "><a href="classifier.html"><strong aria-hidden="true">4.</strong> Mini Image Classifier</a></li><li class="chapter-item expanded "><a href="multithread.html"><strong aria-hidden="true">5.</strong> Mini Multithreading</a></li><li class="chapter-item expanded "><a href="worldclock.html"><strong aria-hidden="true">6.</strong> Mini World Clock</a></li><li class="chapter-item expanded "><a href="calculator.html"><strong aria-hidden="true">7.</strong> Mini Calculator</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="rustfolio.html"><strong aria-hidden="true">1.</strong> Rustfolio</a></li><li class="chapter-item expanded "><a href="s3_cli.html"><strong aria-hidden="true">2.</strong> AWS S3 CLI in Rust</a></li><li class="chapter-item expanded "><a href="hf_micro.html"><strong aria-hidden="true">3.</strong> Dockerized API Proxy for HuggingFace</a></li><li class="chapter-item expanded "><a href="classifier.html"><strong aria-hidden="true">4.</strong> Mini Image Classifier</a></li><li class="chapter-item expanded "><a href="wasm.html"><strong aria-hidden="true">5.</strong> Mini wasm Demo</a></li><li class="chapter-item expanded "><a href="multithread.html"><strong aria-hidden="true">6.</strong> Mini Multithreading</a></li><li class="chapter-item expanded "><a href="worldclock.html"><strong aria-hidden="true">7.</strong> Mini World Clock</a></li><li class="chapter-item expanded "><a href="calculator.html"><strong aria-hidden="true">8.</strong> Mini Calculator</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -368,10 +368,28 @@ python3 preprocess.py
 <p>Assumes <code>&lt;img_name&gt;.png</code> exists in folder ./models/inputs after <code>running preprocess.py</code></p>
 <pre><code>cargo run image --name &lt;img_name&gt;
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="wasm-x-rust-for-web-apps"><a class="header" href="#wasm-x-rust-for-web-apps">Wasm x Rust for Web Apps</a></h1>
+<p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/rust-mlops/tree/main/wasm">https://github.com/athletedecoded/rust-mlops</a></p>
+<p>Playing around with wasm bindings to build a Rust web app. This demo generates a random visitor number and renders to the JS front-end.</p>
+<h2 id="useage-1"><a class="header" href="#useage-1">Useage</a></h2>
+<p><strong>Install</strong></p>
+<pre><code>$ make install
+</code></pre>
+<p><strong>Compile wasm Module</strong></p>
+<pre><code>$ make build-wasm
+</code></pre>
+<p><strong>Serve Web App Locally</strong></p>
+<pre><code>$ make serve
+</code></pre>
+<h2 id="references-3"><a class="header" href="#references-3">References</a></h2>
+<ul>
+<li><a href="https://wasmbyexample.dev/examples/hello-world/hello-world.rust.en-us.html">Wasm By Example</a></li>
+<li><a href="https://github.com/nogibjj/rust-mlops-template/tree/main/hello-wasm-bindgen">Hello wasm</a></li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="parallel-rust-with-rayon"><a class="header" href="#parallel-rust-with-rayon">Parallel Rust with Rayon</a></h1>
 <p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/rust-mlops/tree/main/parallel">https://github.com/athletedecoded/rust-mlops</a></p>
 <p>A program to walk the directory tree and return duplicate files. Walk can be executed in serial or in parallel (with user defined thread option).</p>
-<h2 id="useage-1"><a class="header" href="#useage-1">Useage</a></h2>
+<h2 id="useage-2"><a class="header" href="#useage-2">Useage</a></h2>
 <pre><code>$ cd parallel
 </code></pre>
 <p><strong>Serial execution</strong></p>
@@ -389,7 +407,7 @@ $ cargo run parallel --path &lt;data_dir&gt; --threads &lt;num_threads&gt;
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="world-clock-with-aws-lambda"><a class="header" href="#world-clock-with-aws-lambda">World Clock with AWS Lambda</a></h1>
 <p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/rust-mlops/tree/main/worldclock">https://github.com/athletedecoded/rust-mlops</a></p>
-<h2 id="useage-2"><a class="header" href="#useage-2">Useage</a></h2>
+<h2 id="useage-3"><a class="header" href="#useage-3">Useage</a></h2>
 <p>AWS Lambda function that takes a timezone code as request parameter and returns the local date and time. Currently supports AEST, EST, PST, MST. Defaults to UTC if blank request parameter.</p>
 <p><strong>Example</strong></p>
 <pre><code># request
@@ -432,7 +450,7 @@ $ pip3 install cargo-lambda
 <p><strong>Deploy to AWS Lambda</strong></p>
 <pre><code>$ make deploy
 </code></pre>
-<h2 id="references-3"><a class="header" href="#references-3">References</a></h2>
+<h2 id="references-4"><a class="header" href="#references-4">References</a></h2>
 <ul>
 <li><a href="https://github.com/awslabs/aws-lambda-rust-runtime">AWS Lambda Rust Runtime</a></li>
 <li><a href="https://rust-lang-nursery.github.io/rust-cookbook/datetime.html">Rust Date and Time</a></li>
@@ -447,7 +465,7 @@ $ pip3 install cargo-lambda
 <li>Multiply: &quot;x&quot;</li>
 <li>Divide: &quot;/&quot;</li>
 </ul>
-<h3 id="useage-3"><a class="header" href="#useage-3">Useage</a></h3>
+<h3 id="useage-4"><a class="header" href="#useage-4">Useage</a></h3>
 <pre><code>$ cd calculator
 $ cargo run calc --a &lt;float&gt; --b &lt;float&gt; --op &lt;operator&gt;
 # ex. cargo run calc --a 3 --b 5 --op x
