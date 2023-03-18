@@ -71,10 +71,12 @@
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
             var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            var sidebar = null;
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
@@ -82,7 +84,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="rustfolio.html"><strong aria-hidden="true">1.</strong> Rustfolio</a></li><li class="chapter-item expanded "><a href="s3_cli.html"><strong aria-hidden="true">2.</strong> AWS S3 CLI in Rust</a></li><li class="chapter-item expanded "><a href="hf_micro.html"><strong aria-hidden="true">3.</strong> Dockerized API Proxy for HuggingFace</a></li><li class="chapter-item expanded "><a href="classifier.html"><strong aria-hidden="true">4.</strong> Mini Image Classifier</a></li><li class="chapter-item expanded "><a href="wasm.html"><strong aria-hidden="true">5.</strong> Mini wasm Demo</a></li><li class="chapter-item expanded "><a href="multithread.html"><strong aria-hidden="true">6.</strong> Mini Multithreading</a></li><li class="chapter-item expanded "><a href="worldclock.html"><strong aria-hidden="true">7.</strong> Mini World Clock</a></li><li class="chapter-item expanded "><a href="calculator.html"><strong aria-hidden="true">8.</strong> Mini Calculator</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="rustfolio.html"><strong aria-hidden="true">1.</strong> Rustfolio</a></li><li class="chapter-item expanded "><a href="s3_cli.html"><strong aria-hidden="true">2.</strong> AWS S3 CLI in Rust</a></li><li class="chapter-item expanded "><a href="s3_backup.html"><strong aria-hidden="true">3.</strong> Automated S3 Backup w Serverless Rust</a></li><li class="chapter-item expanded "><a href="hf_micro.html"><strong aria-hidden="true">4.</strong> Dockerized API Proxy for HuggingFace</a></li><li class="chapter-item expanded "><a href="classifier.html"><strong aria-hidden="true">5.</strong> Mini Image Classifier</a></li><li class="chapter-item expanded "><a href="wasm.html"><strong aria-hidden="true">6.</strong> Mini wasm Demo</a></li><li class="chapter-item expanded "><a href="multithread.html"><strong aria-hidden="true">7.</strong> Mini Multithreading</a></li><li class="chapter-item expanded "><a href="worldclock.html"><strong aria-hidden="true">8.</strong> Mini World Clock</a></li><li class="chapter-item expanded "><a href="calculator.html"><strong aria-hidden="true">9.</strong> Mini Calculator</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -245,11 +247,83 @@ CI/CD with Github Actions</li>
 <li><a href="https://docs.aws.amazon.com/toolkit-for-vscode/latest/userguide/setup-credentials.html">AWS Credentials for VS Code</a></li>
 <li><a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/security-iam-awsmanpol.html">AWS IAM User Policy for S3</a></li>
 </ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="automated-s3-backup-with-aws-x-rust"><a class="header" href="#automated-s3-backup-with-aws-x-rust">Automated S3 Backup with AWS x Rust</a></h1>
+<p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/s3-backup">https://github.com/athletedecoded/s3-backup</a></p>
+<p>Automated serverless S3 backup using AWS Lambda x Rust</p>
+<p><img src="./assets/s3-backup.png" alt="image" /></p>
+<h2 id="what-i-learnt"><a class="header" href="#what-i-learnt">What I Learnt</a></h2>
+<ul>
+<li>Deploying AWS serverless using Lambda x S3 trigger</li>
+<li>Configuring S3 Access Points and Roles</li>
+</ul>
+<h2 id="developer-setup"><a class="header" href="#developer-setup">Developer Setup</a></h2>
+<p><strong>Pre-Configure AWS</strong></p>
+<ol>
+<li>Create an IAM User policy for &quot;LambdaDeveloper&quot; with <code>AWSLambda_FullAccess</code> permissions and added custom inline permission config</li>
+</ol>
+<pre><code>{
+    &quot;Version&quot;: &quot;2012-10-17&quot;,
+    &quot;Statement&quot;: [
+        {
+            &quot;Sid&quot;: &quot;PermissionsToDeploy&quot;,
+            &quot;Effect&quot;: &quot;Allow&quot;,
+            &quot;Action&quot;: [
+                &quot;iam:CreateRole&quot;,
+                &quot;iam:CreatePolicy&quot;,
+                &quot;iam:PutRolePolicy&quot;,
+                &quot;iam:AttachRolePolicy&quot;,
+                &quot;iam:UpdateAssumeRolePolicy&quot;
+            ],
+            &quot;Resource&quot;: &quot;*&quot;
+        }
+    ]
+}
+</code></pre>
+<ol start="2">
+<li>Add &quot;LambdaDeveloper&quot; keys to your local ~/.aws/credentials file with environment variables: </li>
+</ol>
+<ul>
+<li>aws_access_key_id</li>
+<li>aws_secret_access_key</li>
+<li>aws_role_arn</li>
+<li>region </li>
+</ul>
+<p><em>Note: <code>aws_role_arn</code> is copied from the IAM user summary and is formatted as arn:aws:iam::&lt;aws_acct&gt;:user/&lt;iam_user&gt;</em></p>
+<ol start="3">
+<li>Create an IAM Role policy for &quot;S3xLambdaAccessRole&quot; with <code>AmazonS3FullAccess</code> and <code>AWSLambdaBasicExecutionRole</code> permissions</li>
+<li>Allocate 3 x S3 Buckets (SourceBucket, OutputBucket, RubbishBucket) and add an Access Point to each</li>
+</ol>
+<p><strong>Deploy Lambda Function</strong></p>
+<pre><code># Install cargo lambda
+$ python3 -m venv ~/.venv
+$ source ~/.venv/bin/activate
+$ make install
+
+# Build binary
+$ make release
+
+# Deploy to AWS
+$ make deploy
+</code></pre>
+<p><strong>AWS Permissions</strong></p>
+<ol>
+<li>From the AWS Lambda Console &gt; Functions &gt; s3-backup &gt; Configuration &gt; Permissions &gt; change Execution role to preconfigured &quot;S3xLambdaAccessRole&quot;</li>
+<li>From the AWS Lambda Console &gt; Functions &gt; s3-backup &gt; Configuration &gt; Environment variables &gt; set the following env variables coinciding with S3 Access Point ARNs: <code>SRC_AP_ARN</code>, <code>DEST_AP_ARN</code>, <code>RUBBISH_AP_ARN</code></li>
+</ol>
+<p><em>NB: Access Point ARNs will be of the format arn:aws:s3:<region>:<aws-id>:accesspoint/<access-point-name></em></p>
+<h2 id="references-2"><a class="header" href="#references-2">References</a></h2>
+<ul>
+<li><a href="https://www.cargo-lambda.info/">Cargo Lambda for Rust</a></li>
+<li><a href="https://docs.aws.amazon.com/sdk-for-rust/latest/dg/lambda.html">Using the AWS SDK for Rust in AWS Lambda function</a></li>
+<li><a href="https://docs.rs/aws_lambda_events/latest/aws_lambda_events/index.html">AWS Lambda Events Docs for Rust</a></li>
+<li><a href="https://github.com/aws-samples/serverless-rust-demo/">AWS Serverless Rust Demo</a></li>
+<li><a href="https://aws.amazon.com/getting-started/hands-on/amazon-s3-object-lambda-to-dynamically-watermark-images/">AWS Tutorial: S3 Object Lambda</a></li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="dockerized-api-proxy-for-huggingface"><a class="header" href="#dockerized-api-proxy-for-huggingface">Dockerized API Proxy for HuggingFace</a></h1>
 <p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/hf-micro">https://github.com/athletedecoded/hf-micro</a></p>
 <p>The <a href="https://github.com/huggingface/huggingface_hub">HuggingFace Hub</a> is implemented as a Python wrapper around the HuggingFace API Endpoints. This project is a dockerized Rust microservice that acts as an API proxy for the HuggingFace API Endpoints. </p>
 <p><img src="./assets/hf-micro.png" alt="image" /></p>
-<h2 id="what-i-learnt"><a class="header" href="#what-i-learnt">What I Learnt</a></h2>
+<h2 id="what-i-learnt-1"><a class="header" href="#what-i-learnt-1">What I Learnt</a></h2>
 <ul>
 <li>Configuring reqwest for GET, POST, PUT, DELETE requests</li>
 <li>Certifying HTTPS using reqwest from within a Docker image -- I spent days debugging and exhausting certification solutions and it all came down to enabling the rustls-tls feature in reqwest and installing debian ca-certificates 🤯</li>
@@ -344,7 +418,7 @@ Actix HTTP error response handling</li>
 <li><input disabled="" type="checkbox" checked=""/>
 CI/CD &amp; Binary Release</li>
 </ul>
-<h2 id="references-2"><a class="header" href="#references-2">References</a></h2>
+<h2 id="references-3"><a class="header" href="#references-3">References</a></h2>
 <ul>
 <li><a href="https://github.com/huggingface/huggingface_hub">HuggingFace Hub Python Client</a></li>
 <li><a href="https://huggingface.co/docs/hub/security-tokens">HF access tokens</a></li>
@@ -381,7 +455,7 @@ python3 preprocess.py
 <p><strong>Serve Web App Locally</strong></p>
 <pre><code>$ make serve
 </code></pre>
-<h2 id="references-3"><a class="header" href="#references-3">References</a></h2>
+<h2 id="references-4"><a class="header" href="#references-4">References</a></h2>
 <ul>
 <li><a href="https://wasmbyexample.dev/examples/hello-world/hello-world.rust.en-us.html">Wasm By Example</a></li>
 <li><a href="https://github.com/nogibjj/rust-mlops-template/tree/main/hello-wasm-bindgen">Hello wasm</a></li>
@@ -450,7 +524,7 @@ $ pip3 install cargo-lambda
 <p><strong>Deploy to AWS Lambda</strong></p>
 <pre><code>$ make deploy
 </code></pre>
-<h2 id="references-4"><a class="header" href="#references-4">References</a></h2>
+<h2 id="references-5"><a class="header" href="#references-5">References</a></h2>
 <ul>
 <li><a href="https://github.com/awslabs/aws-lambda-rust-runtime">AWS Lambda Rust Runtime</a></li>
 <li><a href="https://rust-lang-nursery.github.io/rust-cookbook/datetime.html">Rust Date and Time</a></li>
