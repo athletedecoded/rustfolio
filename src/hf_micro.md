@@ -1,15 +1,16 @@
-# Dockerized API Proxy for HuggingFace
+# Distroless & Containerized API Proxy for HuggingFace
 
 **Project Repo:** [https://github.com/athletedecoded/hf-micro](https://github.com/athletedecoded/hf-micro)
 
-The [HuggingFace Hub](https://github.com/huggingface/huggingface_hub) is implemented as a Python wrapper around the HuggingFace API Endpoints. This project is a dockerized Rust microservice that acts as an API proxy for the HuggingFace API Endpoints. 
+The [HuggingFace Hub](https://github.com/huggingface/huggingface_hub) is implemented as a Python wrapper around the HuggingFace API Endpoints. This project is a distroless and containerized Rust microservice that acts as an API proxy for the HuggingFace API Endpoints. Github Actions allows for automated CI/CD to Azure Containers.
 
 ![image](./assets/hf-micro.png)
 
 ## What I Learnt
 
 * Configuring reqwest for GET, POST, PUT, DELETE requests
-* Certifying HTTPS using reqwest from within a Docker image -- I spent days debugging and exhausting certification solutions and it all came down to enabling the rustls-tls feature in reqwest and installing debian ca-certificates 🤯
+* Certifying HTTPS using reqwest from within a Docker image -- I spent days debugging and exhausting certification solutions and it all came down to enabling the rustls-tls feature in reqwest and either installing debian ca-certificates or mounting them to Docker at runtime 🤯
+* CI/CD with Github Actions to automate Azure container deployment
 
 
 ## Setup
@@ -41,6 +42,12 @@ $ make run
 $ make build
 ```
 
+**Gotchas** if you encounter a build failure on "ERROR [internal] load metadata ..." then run
+```
+$ rm  ~/.docker/config.json 
+$ make build
+```
+
 3. Run Docker image
 
 ```
@@ -63,10 +70,11 @@ Then launch Docker image with mounted certificates
 $ make mntcerts
 ```
 
-**Generate Rust Binary**
-```
-$ make release
-```
+**Deploy to Azure**
+1. Provision an Azure Container App and set repository PAT, AZURE_CREDENTIALS secrets according to this [repo docs](https://github.com/athletedecoded/distroless-rust-azure)
+2. Ensure Container App `ingress` setting matches port "8080"
+3. Set a repository secret `HFAT` to your HuggingFace Access Token
+4. `git push origin deploy-distro` then manually trigger workflow from GitHub Actions
 
 ## Useage & Endpoints
 
