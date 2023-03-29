@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="rustfolio.html"><strong aria-hidden="true">1.</strong> Rustfolio</a></li><li class="chapter-item expanded "><a href="s3_cli.html"><strong aria-hidden="true">2.</strong> AWS S3 CLI in Rust</a></li><li class="chapter-item expanded "><a href="s3_backup.html"><strong aria-hidden="true">3.</strong> Automated S3 Backup w Serverless Rust</a></li><li class="chapter-item expanded "><a href="hf_micro.html" class="active"><strong aria-hidden="true">4.</strong> Dockerized API Proxy for HuggingFace</a></li><li class="chapter-item expanded "><a href="classifier.html"><strong aria-hidden="true">5.</strong> Mini Image Classifier</a></li><li class="chapter-item expanded "><a href="wasm.html"><strong aria-hidden="true">6.</strong> Mini wasm Demo</a></li><li class="chapter-item expanded "><a href="multithread.html"><strong aria-hidden="true">7.</strong> Mini Multithreading</a></li><li class="chapter-item expanded "><a href="worldclock.html"><strong aria-hidden="true">8.</strong> Mini World Clock</a></li><li class="chapter-item expanded "><a href="calculator.html"><strong aria-hidden="true">9.</strong> Mini Calculator</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="rustfolio.html"><strong aria-hidden="true">1.</strong> Rustfolio</a></li><li class="chapter-item expanded "><a href="s3_cli.html"><strong aria-hidden="true">2.</strong> AWS S3 CLI in Rust</a></li><li class="chapter-item expanded "><a href="s3_backup.html"><strong aria-hidden="true">3.</strong> Automated S3 Backup w Serverless Rust</a></li><li class="chapter-item expanded "><a href="hf_micro.html" class="active"><strong aria-hidden="true">4.</strong> Dockerized API Proxy for HuggingFace</a></li><li class="chapter-item expanded "><a href="classifier.html"><strong aria-hidden="true">5.</strong> Mini Image Classifier</a></li><li class="chapter-item expanded "><a href="wasm.html"><strong aria-hidden="true">6.</strong> Mini Wasm Demo</a></li><li class="chapter-item expanded "><a href="multithread.html"><strong aria-hidden="true">7.</strong> Mini Multithreading</a></li><li class="chapter-item expanded "><a href="worldclock.html"><strong aria-hidden="true">8.</strong> Mini World Clock</a></li><li class="chapter-item expanded "><a href="calculator.html"><strong aria-hidden="true">9.</strong> Mini Calculator</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -144,14 +144,15 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="dockerized-api-proxy-for-huggingface"><a class="header" href="#dockerized-api-proxy-for-huggingface">Dockerized API Proxy for HuggingFace</a></h1>
+                        <h1 id="distroless--containerized-api-proxy-for-huggingface"><a class="header" href="#distroless--containerized-api-proxy-for-huggingface">Distroless &amp; Containerized API Proxy for HuggingFace</a></h1>
 <p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/hf-micro">https://github.com/athletedecoded/hf-micro</a></p>
-<p>The <a href="https://github.com/huggingface/huggingface_hub">HuggingFace Hub</a> is implemented as a Python wrapper around the HuggingFace API Endpoints. This project is a dockerized Rust microservice that acts as an API proxy for the HuggingFace API Endpoints. </p>
+<p>The <a href="https://github.com/huggingface/huggingface_hub">HuggingFace Hub</a> is implemented as a Python wrapper around the HuggingFace API Endpoints. This project is a distroless and containerized Rust microservice that acts as an API proxy for the HuggingFace API Endpoints. Github Actions allows for automated CI/CD to Azure Containers.</p>
 <p><img src="./assets/hf-micro.png" alt="image" /></p>
 <h2 id="what-i-learnt"><a class="header" href="#what-i-learnt">What I Learnt</a></h2>
 <ul>
 <li>Configuring reqwest for GET, POST, PUT, DELETE requests</li>
-<li>Certifying HTTPS using reqwest from within a Docker image -- I spent days debugging and exhausting certification solutions and it all came down to enabling the rustls-tls feature in reqwest and installing debian ca-certificates 🤯</li>
+<li>Certifying HTTPS using reqwest from within a Docker image -- I spent days debugging and exhausting certification solutions and it all came down to enabling the rustls-tls feature in reqwest and either installing debian ca-certificates or mounting them to Docker at runtime 🤯</li>
+<li>CI/CD with Github Actions to automate Azure container deployment</li>
 </ul>
 <h2 id="setup"><a class="header" href="#setup">Setup</a></h2>
 <p><strong>Install</strong></p>
@@ -177,6 +178,10 @@
 </ol>
 <pre><code>$ make build
 </code></pre>
+<p><strong>Gotchas</strong> if you encounter a build failure on &quot;ERROR [internal] load metadata ...&quot; then run</p>
+<pre><code>$ rm  ~/.docker/config.json 
+$ make build
+</code></pre>
 <ol start="3">
 <li>Run Docker image</li>
 </ol>
@@ -192,9 +197,13 @@ $ openssl req -x509 -newkey rsa:4096 -keyout ./certs/key.pem -out ./certs/cert.p
 <p>Then launch Docker image with mounted certificates</p>
 <pre><code>$ make mntcerts
 </code></pre>
-<p><strong>Generate Rust Binary</strong></p>
-<pre><code>$ make release
-</code></pre>
+<p><strong>Deploy to Azure</strong></p>
+<ol>
+<li>Provision an Azure Container App and set repository PAT, AZURE_CREDENTIALS secrets according to this <a href="https://github.com/athletedecoded/distroless-rust-azure">repo docs</a></li>
+<li>Ensure Container App <code>ingress</code> setting matches port &quot;8080&quot;</li>
+<li>Set a repository secret <code>HFAT</code> to your HuggingFace Access Token</li>
+<li><code>git push origin deploy-distro</code> then manually trigger workflow from GitHub Actions</li>
+</ol>
 <h2 id="useage--endpoints"><a class="header" href="#useage--endpoints">Useage &amp; Endpoints</a></h2>
 <p>Supported endpoints to base URL https://localhost:8080</p>
 <p><strong>GET /</strong> -- Homepage</p>
