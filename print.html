@@ -216,6 +216,10 @@
 <pre><code>$ cargo run delete --bucket &lt;bucket_name&gt;
 # ex: cargo run delete --bucket ids721
 </code></pre>
+<p><strong>Get an object from an S3 bucket</strong></p>
+<pre><code>$ cargo run get --bucket &lt;bucket_name&gt; --key &lt;object_key&gt;
+# ex: cargo run get --bucket ids721 --key test.jpg
+</code></pre>
 <h2 id="cicd"><a class="header" href="#cicd">CI/CD</a></h2>
 <p>Github Actions configured in <a href=".github/workflows/rust.yml">.github/workflows/rust.yml</a></p>
 <p><strong>Build Executable</strong></p>
