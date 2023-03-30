@@ -57,6 +57,12 @@ $ cargo run delete --bucket <bucket_name>
 # ex: cargo run delete --bucket ids721
 ```
 
+**Get an object from an S3 bucket**
+```
+$ cargo run get --bucket <bucket_name> --key <object_key>
+# ex: cargo run get --bucket ids721 --key test.jpg
+```
+
 ## CI/CD
 
 Github Actions configured in [.github/workflows/rust.yml](.github/workflows/rust.yml)
