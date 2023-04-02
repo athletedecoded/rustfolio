@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Automated S3 Backup w Serverless Rust - rustfolio</title>
+        <title>EFS Image Compression - rustfolio</title>
 
 
         <!-- Custom HTML head -->
@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="rustfolio.html"><strong aria-hidden="true">1.</strong> Rustfolio</a></li><li class="chapter-item expanded "><a href="s3_cli.html"><strong aria-hidden="true">2.</strong> AWS S3 CLI in Rust</a></li><li class="chapter-item expanded "><a href="img_comp.html"><strong aria-hidden="true">3.</strong> EFS Image Compression</a></li><li class="chapter-item expanded "><a href="s3_backup.html" class="active"><strong aria-hidden="true">4.</strong> Automated S3 Backup w Serverless Rust</a></li><li class="chapter-item expanded "><a href="hf_micro.html"><strong aria-hidden="true">5.</strong> Dockerized API Proxy for HuggingFace</a></li><li class="chapter-item expanded "><a href="classifier.html"><strong aria-hidden="true">6.</strong> Mini Image Classifier</a></li><li class="chapter-item expanded "><a href="wasm.html"><strong aria-hidden="true">7.</strong> Mini Wasm Demo</a></li><li class="chapter-item expanded "><a href="multithread.html"><strong aria-hidden="true">8.</strong> Mini Multithreading</a></li><li class="chapter-item expanded "><a href="worldclock.html"><strong aria-hidden="true">9.</strong> Mini World Clock</a></li><li class="chapter-item expanded "><a href="calculator.html"><strong aria-hidden="true">10.</strong> Mini Calculator</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="rustfolio.html"><strong aria-hidden="true">1.</strong> Rustfolio</a></li><li class="chapter-item expanded "><a href="s3_cli.html"><strong aria-hidden="true">2.</strong> AWS S3 CLI in Rust</a></li><li class="chapter-item expanded "><a href="img_comp.html" class="active"><strong aria-hidden="true">3.</strong> EFS Image Compression</a></li><li class="chapter-item expanded "><a href="s3_backup.html"><strong aria-hidden="true">4.</strong> Automated S3 Backup w Serverless Rust</a></li><li class="chapter-item expanded "><a href="hf_micro.html"><strong aria-hidden="true">5.</strong> Dockerized API Proxy for HuggingFace</a></li><li class="chapter-item expanded "><a href="classifier.html"><strong aria-hidden="true">6.</strong> Mini Image Classifier</a></li><li class="chapter-item expanded "><a href="wasm.html"><strong aria-hidden="true">7.</strong> Mini Wasm Demo</a></li><li class="chapter-item expanded "><a href="multithread.html"><strong aria-hidden="true">8.</strong> Mini Multithreading</a></li><li class="chapter-item expanded "><a href="worldclock.html"><strong aria-hidden="true">9.</strong> Mini World Clock</a></li><li class="chapter-item expanded "><a href="calculator.html"><strong aria-hidden="true">10.</strong> Mini Calculator</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -144,19 +144,27 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="automated-s3-backup-with-aws-x-rust"><a class="header" href="#automated-s3-backup-with-aws-x-rust">Automated S3 Backup with AWS x Rust</a></h1>
-<p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/s3-backup">https://github.com/athletedecoded/s3-backup</a></p>
-<p>Automated serverless S3 backup using AWS Lambda x Rust</p>
-<p><img src="./assets/s3-backup.png" alt="image" /></p>
-<h2 id="what-i-learnt"><a class="header" href="#what-i-learnt">What I Learnt</a></h2>
+                        <h1 id="image-compression-for-big-data-with-efs"><a class="header" href="#image-compression-for-big-data-with-efs">Image Compression for Big Data with EFS</a></h1>
+<p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/img-compress">https://github.com/athletedecoded/img-compress</a></p>
+<p>Image Compression for Big Data using EFS x Lambda x Rust. Uses downsampling + filtering to perform inplace image compression in parallel and reduce the memory cost of big image data storage. Currently accepts JPEG images only. Includes upsampling invocation option to restore image size.</p>
+<p><img src="./assets/img-comp.png" alt="image" /></p>
+<h2 id="useage"><a class="header" href="#useage">Useage</a></h2>
+<pre><code>cargo lambda invoke --remote \
+    --data-ascii '{&quot;dir&quot;: &quot;imgs&quot;, &quot;scale_op&quot;: &quot;down&quot;, &quot;scale_factor&quot;: 5, &quot;filter&quot;: &quot;Gaussian&quot;}' \
+    --output-format json \
+    img-comp
+</code></pre>
+<p>where:</p>
 <ul>
-<li>Deploying AWS serverless using Lambda x S3 trigger</li>
-<li>Configuring S3 Access Points and Roles</li>
+<li>dir = subdirectory to perform compression on i.e. /mnt/efs/{dir}</li>
+<li>scale_op = &quot;down&quot;,&quot;up&quot;</li>
+<li>scale_factor = factor to scale width/height</li>
+<li>filter = &quot;gaussian&quot; (default), &quot;nearest&quot;, &quot;triangle&quot;, &quot;catmullrom&quot;, &quot;lanczos3&quot;</li>
 </ul>
 <h2 id="developer-setup"><a class="header" href="#developer-setup">Developer Setup</a></h2>
-<p><strong>Pre-Configure AWS</strong></p>
+<p><strong>Configure AWS IAM Permissions</strong></p>
 <ol>
-<li>Create an IAM User policy for &quot;LambdaDeveloper&quot; with <code>AWSLambda_FullAccess</code> permissions and added custom inline permission config</li>
+<li>Create an IAM User policy for &quot;LambdaDev&quot; with <code>AWSLambda_FullAccess</code> permissions and added custom inline permission config</li>
 </ol>
 <pre><code>{
     &quot;Version&quot;: &quot;2012-10-17&quot;,
@@ -177,55 +185,126 @@
 }
 </code></pre>
 <ol start="2">
-<li>Add &quot;LambdaDeveloper&quot; keys to your local ~/.aws/credentials file with environment variables: </li>
+<li>Add &quot;LambdaDev&quot; access keys to your local ~/.aws/credentials file along with environment variables: </li>
 </ol>
 <ul>
 <li>aws_access_key_id</li>
 <li>aws_secret_access_key</li>
-<li>aws_role_arn</li>
+<li>aws_role_arn (NB: this is copied from the IAM user summary and is formatted as arn:aws:iam::&lt;aws_acct&gt;:user/&lt;iam_user&gt;)</li>
 <li>region </li>
 </ul>
-<p><em>Note: <code>aws_role_arn</code> is copied from the IAM user summary and is formatted as arn:aws:iam::&lt;aws_acct&gt;:user/&lt;iam_user&gt;</em></p>
 <ol start="3">
-<li>Create an IAM Role policy for &quot;S3xLambdaAccessRole&quot; with <code>AmazonS3FullAccess</code> and <code>AWSLambdaBasicExecutionRole</code> permissions</li>
-<li>Allocate 3 x S3 Buckets (SourceBucket, OutputBucket, RubbishBucket) and add an Access Point to each</li>
+<li>Create an IAM Role policy named &quot;EFSxLambda&quot; with <code>AWSLambdaBasicExecutionRole</code> + <code>AWSLambdaVPCAccessExecutionRole</code> + <code>AmazonElasticFileSystemClientFullAccess</code> permissions</li>
 </ol>
-<p><strong>Deploy Lambda Function</strong></p>
-<pre><code># Install cargo lambda
+<p><strong>Deploy Lambda Fxn from Developer Environment (i.e. this repo)</strong></p>
+<pre><code># Install cargo-lambda
 $ python3 -m venv ~/.venv
 $ source ~/.venv/bin/activate
 $ make install
 
-# Build binary
+# Build Binary 
 $ make release
 
 # Deploy to AWS
 $ make deploy
 </code></pre>
-<p><strong>AWS Permissions</strong></p>
+<p><strong>Setup Cloud9</strong></p>
 <ol>
-<li>From the AWS Lambda Console &gt; Functions &gt; s3-backup &gt; Configuration &gt; Permissions &gt; change Execution role to preconfigured &quot;S3xLambdaAccessRole&quot;</li>
-<li>From the AWS Lambda Console &gt; Functions &gt; s3-backup &gt; Configuration &gt; Environment variables &gt; set the following env variables coinciding with S3 Access Point ARNs: <code>SRC_AP_ARN</code>, <code>DEST_AP_ARN</code>, <code>RUBBISH_AP_ARN</code></li>
+<li>Launch Cloud9 console and create an environment with &quot;New EC2 Instance&quot; + &quot;SSM Connection&quot; + &quot;default VPC&quot;</li>
+<li>Once provisioned, click on env details &gt; EC2 instance &gt; manage EC2 instance. Make note of the associated security group listed.</li>
 </ol>
-<p><em>NB: Access Point ARNs will be of the format arn:aws:s3:<region>:<aws-id>:accesspoint/<access-point-name></em></p>
+<p><strong>Setup EFS</strong></p>
+<ol>
+<li>Launch AWS EFS console and provision EFS instance</li>
+<li>Once provisioned, click on file system name &gt; network. Make note of the security group id listed. </li>
+<li>Under EFS access points tab &gt; add access point &gt; create with following settings:</li>
+</ol>
+<ul>
+<li>Name: Lambda2EFS</li>
+<li>Root directory path: <code>/</code> (by default root is /mnt/efs)</li>
+<li>Posix User ID: 1000</li>
+<li>Posix Group ID: 1000</li>
+<li>Owner User ID: 1000</li>
+<li>Owner Group ID: 1000</li>
+<li>Access point permissions: 0777</li>
+</ul>
+<p><strong>Configure Security Groups</strong></p>
+<ol>
+<li>From EC2 console &gt; security groups &gt; new security group: </li>
+</ol>
+<ul>
+<li>Name = ImgComp</li>
+<li>Description = Mangage img-comp lambda access</li>
+<li>VPC = same as EFS (default)</li>
+<li>Save</li>
+</ul>
+<ol start="2">
+<li>To enable EFS --&gt; Lambda: click ImgComp security group ID &gt; edit inbound rules &gt; Set: type = NFS, protocol = TCP, port range = 2049, source = custom &gt; add the EFS security group ID (from the drop down box)</li>
+<li>To enable EFS --&gt; Cloud9: click Cloud9 security group ID &gt; edit inbound rules &gt; Set: type = NFS, protocol = TCP, port range = 2049, source = custom &gt; add the EFS security group ID (from the drop down box).</li>
+<li>To enable Lambda &amp; Cloud 9 --&gt; EFS: click EFS security group ID &gt; edit inbound rules &gt; add inbound rule for each:</li>
+</ol>
+<ul>
+<li>Set: type = NFS, protocol = TCP, port range = 2049, source = custom &gt; add the ImgComp security group ID (from the drop down box)</li>
+<li>Set: type = NFS, protocol = TCP, port range = 2049, source = custom &gt; add the Cloud9 security group ID (from the drop down box)</li>
+</ul>
+<p><strong>Configure Lambda</strong></p>
+<ol>
+<li>Configuration &gt; Permissions &gt; edit execution role &gt; select &quot;EFSxLambda&quot; from above</li>
+<li>Configuration &gt; VPC &gt; edit &gt; select default VPC (to match EFS)</li>
+<li>Configuration &gt; VPC &gt; edit &gt; select security group as ImgComp</li>
+<li>Configuration &gt; File Systems &gt; add EFS + access point + local mount path = /mnt/efs</li>
+<li>Configuration &gt; Env Variables &gt; LD_LIBRARY_PATH = /mnt/efs</li>
+</ol>
+<p><strong>Mount EFS to Cloud9</strong></p>
+<ol>
+<li>Launch Cloud9 environment</li>
+<li>Run the following commands to mount to /mnt/efs</li>
+</ol>
+<pre><code># Docs: https://repost.aws/knowledge-center/efs-mount-automount-unmount-steps
+
+# Install efs-ultils (https://docs.aws.amazon.com/efs/latest/ug/installing-amazon-efs-utils.html)
+sudo yum install -y amazon-efs-utils
+
+sudo mkdir -p /mnt/efs
+
+# From img-comp EFS &gt; Attach &gt; copy EFS helper command
+sudo mount -t efs -o tls &lt;AWS_FS_ID&gt;:/ /mnt/efs
+
+# Switch ownership permissions
+sudo chown ec2-user:ec2-user /mnt/efs
+sudo chmod 755 /mnt/efs
+
+# Copy local Cloud9 imgs directory to EFS
+cp -r imgs /mnt/efs
+
+# check files have been moved over
+cd /mnt/efs
+ls
+</code></pre>
+<h2 id="gotchas"><a class="header" href="#gotchas">Gotchas</a></h2>
+<ul>
+<li>Invokation failure may be insufficient lambda CPU/tmp storage that needs to be reconfigured for higher capacity</li>
+</ul>
+<h2 id="future-todos"><a class="header" href="#future-todos">Future ToDos</a></h2>
+<ul>
+<li>[] Multiple file formats and error handling for non image data </li>
+</ul>
 <h2 id="references"><a class="header" href="#references">References</a></h2>
 <ul>
-<li><a href="https://www.cargo-lambda.info/">Cargo Lambda for Rust</a></li>
-<li><a href="https://docs.aws.amazon.com/sdk-for-rust/latest/dg/lambda.html">Using the AWS SDK for Rust in AWS Lambda function</a></li>
-<li><a href="https://docs.rs/aws_lambda_events/latest/aws_lambda_events/index.html">AWS Lambda Events Docs for Rust</a></li>
-<li><a href="https://github.com/aws-samples/serverless-rust-demo/">AWS Serverless Rust Demo</a></li>
-<li><a href="https://aws.amazon.com/getting-started/hands-on/amazon-s3-object-lambda-to-dynamically-watermark-images/">AWS Tutorial: S3 Object Lambda</a></li>
+<li><a href="https://aws.amazon.com/blogs/compute/using-amazon-efs-for-aws-lambda-in-your-serverless-applications/">AWS EFS + Lambda Guide</a></li>
+<li><a href="https://docs.aws.amazon.com/efs/latest/ug/mounting-fs-mount-helper-ec2-linux.html">Mount EC2 to EFS</a></li>
+<li><a href="https://github.com/noahgift/rust-mlops-template/tree/main/onnx-efs-lambda">Noah's Repo</a></li>
 </ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="img_comp.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="s3_cli.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="hf_micro.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="s3_backup.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -235,11 +314,11 @@ $ make deploy
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="img_comp.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="s3_cli.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="hf_micro.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="s3_backup.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
