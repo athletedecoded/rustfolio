@@ -83,16 +83,38 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="rustfolio.html"><strong aria-hidden="true">1.</strong> Rustfolio</a></li><li class="chapter-item expanded "><a href="s3_cli.html"><strong aria-hidden="true">2.</strong> AWS S3 CLI in Rust</a></li><li class="chapter-item expanded "><a href="img_comp.html"><strong aria-hidden="true">3.</strong> EFS Image Compression</a></li><li class="chapter-item expanded "><a href="s3_backup.html"><strong aria-hidden="true">4.</strong> Automated S3 Backup w Serverless Rust</a></li><li class="chapter-item expanded "><a href="hf_micro.html" class="active"><strong aria-hidden="true">5.</strong> Dockerized API Proxy for HuggingFace</a></li><li class="chapter-item expanded "><a href="classifier.html"><strong aria-hidden="true">6.</strong> Mini Image Classifier</a></li><li class="chapter-item expanded "><a href="wasm.html"><strong aria-hidden="true">7.</strong> Mini Wasm Demo</a></li><li class="chapter-item expanded "><a href="multithread.html"><strong aria-hidden="true">8.</strong> Mini Multithreading</a></li><li class="chapter-item expanded "><a href="worldclock.html"><strong aria-hidden="true">9.</strong> Mini World Clock</a></li><li class="chapter-item expanded "><a href="calculator.html"><strong aria-hidden="true">10.</strong> Mini Calculator</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="rustfolio.html"><strong aria-hidden="true">1.</strong> Rustfolio</a></li><li class="chapter-item expanded "><a href="s3_cli.html"><strong aria-hidden="true">2.</strong> AWS S3 CLI in Rust</a></li><li class="chapter-item expanded "><a href="img_comp.html"><strong aria-hidden="true">3.</strong> EFS Image Compression</a></li><li class="chapter-item expanded "><a href="s3_backup.html"><strong aria-hidden="true">4.</strong> Automated S3 Backup w Serverless Rust</a></li><li class="chapter-item expanded "><a href="hf_micro.html" class="active"><strong aria-hidden="true">5.</strong> Dockerized API Proxy for HuggingFace</a></li><li class="chapter-item expanded "><a href="rusty_pipe.html"><strong aria-hidden="true">6.</strong> E2E Distroless ML Pipeline</a></li><li class="chapter-item expanded "><a href="https://github.com/athletedecoded/rust-mlops.html"><strong aria-hidden="true">7.</strong> MLOPs Mini Projects</a></li><li class="chapter-item expanded "><a href="https://github.com/athletedecoded/rust-data-engineering.html"><strong aria-hidden="true">8.</strong> Data Engineering Mini Projects</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
@@ -270,7 +292,7 @@ CI/CD &amp; Binary Release</li>
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="classifier.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="rusty_pipe.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -284,7 +306,7 @@ CI/CD &amp; Binary Release</li>
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="classifier.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="rusty_pipe.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

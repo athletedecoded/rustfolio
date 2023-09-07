@@ -84,16 +84,38 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="rustfolio.html"><strong aria-hidden="true">1.</strong> Rustfolio</a></li><li class="chapter-item expanded "><a href="s3_cli.html"><strong aria-hidden="true">2.</strong> AWS S3 CLI in Rust</a></li><li class="chapter-item expanded "><a href="img_comp.html"><strong aria-hidden="true">3.</strong> EFS Image Compression</a></li><li class="chapter-item expanded "><a href="s3_backup.html"><strong aria-hidden="true">4.</strong> Automated S3 Backup w Serverless Rust</a></li><li class="chapter-item expanded "><a href="hf_micro.html"><strong aria-hidden="true">5.</strong> Dockerized API Proxy for HuggingFace</a></li><li class="chapter-item expanded "><a href="classifier.html"><strong aria-hidden="true">6.</strong> Mini Image Classifier</a></li><li class="chapter-item expanded "><a href="wasm.html"><strong aria-hidden="true">7.</strong> Mini Wasm Demo</a></li><li class="chapter-item expanded "><a href="multithread.html"><strong aria-hidden="true">8.</strong> Mini Multithreading</a></li><li class="chapter-item expanded "><a href="worldclock.html"><strong aria-hidden="true">9.</strong> Mini World Clock</a></li><li class="chapter-item expanded "><a href="calculator.html"><strong aria-hidden="true">10.</strong> Mini Calculator</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="rustfolio.html"><strong aria-hidden="true">1.</strong> Rustfolio</a></li><li class="chapter-item expanded "><a href="s3_cli.html"><strong aria-hidden="true">2.</strong> AWS S3 CLI in Rust</a></li><li class="chapter-item expanded "><a href="img_comp.html"><strong aria-hidden="true">3.</strong> EFS Image Compression</a></li><li class="chapter-item expanded "><a href="s3_backup.html"><strong aria-hidden="true">4.</strong> Automated S3 Backup w Serverless Rust</a></li><li class="chapter-item expanded "><a href="hf_micro.html"><strong aria-hidden="true">5.</strong> Dockerized API Proxy for HuggingFace</a></li><li class="chapter-item expanded "><a href="rusty_pipe.html"><strong aria-hidden="true">6.</strong> E2E Distroless ML Pipeline</a></li><li class="chapter-item expanded "><a href="https://github.com/athletedecoded/rust-mlops.html"><strong aria-hidden="true">7.</strong> MLOPs Mini Projects</a></li><li class="chapter-item expanded "><a href="https://github.com/athletedecoded/rust-data-engineering.html"><strong aria-hidden="true">8.</strong> Data Engineering Mini Projects</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
@@ -257,7 +279,7 @@ CI/CD with Github Actions</li>
 <p><img src="./assets/img-comp.png" alt="image" /></p>
 <h2 id="useage"><a class="header" href="#useage">Useage</a></h2>
 <pre><code>cargo lambda invoke --remote \
-    --data-ascii '{&quot;dir&quot;: &quot;imgs&quot;, &quot;scale_op&quot;: &quot;down&quot;, &quot;scale_factor&quot;: 5, &quot;filter&quot;: &quot;Gaussian&quot;}' \
+    --data-ascii '{&quot;dir&quot;: &quot;imgs&quot;, &quot;scale_op&quot;: &quot;down&quot;, &quot;scale_factor&quot;: 2, &quot;filter&quot;: &quot;Gaussian&quot;}' \
     --output-format json \
     img-comp
 </code></pre>
@@ -391,10 +413,6 @@ ls
 <h2 id="gotchas"><a class="header" href="#gotchas">Gotchas</a></h2>
 <ul>
 <li>Invokation failure may be insufficient lambda CPU/tmp storage that needs to be reconfigured for higher capacity</li>
-</ul>
-<h2 id="future-todos"><a class="header" href="#future-todos">Future ToDos</a></h2>
-<ul>
-<li>[] Multiple file formats and error handling for non image data </li>
 </ul>
 <h2 id="references-2"><a class="header" href="#references-2">References</a></h2>
 <ul>
@@ -591,126 +609,89 @@ CI/CD &amp; Binary Release</li>
 <li><a href="https://crates.io/crates/reqwest">reqwest crate docs</a></li>
 <li><a href="https://smallstep.com/blog/automate-docker-ssl-tls-certificates/">TLS Debugging Docker</a></li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="image-classification-with-tf"><a class="header" href="#image-classification-with-tf">Image Classification with TF</a></h1>
-<p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/rust-mlops/tree/main/tf-rust">https://github.com/athletedecoded/rust-mlops</a></p>
-<p>Adapting the <a href="https://github.com/tensorflow/rust/tree/master/examples">Tensorflow Rust example</a>, use the Tensorflow crate and Rust bindings to classifiy images with MobileNetv3.</p>
-<h2 id="useage-1"><a class="header" href="#useage-1">Useage</a></h2>
-<p><strong>Load image dataset</strong></p>
-<p>Upload your images to tf-rust/img</p>
-<p><strong>Load model and preprocess images</strong></p>
-<p>Note this will print python based model predictions to CLI</p>
-<pre><code>pip3 install -r requirements.txt
-python3 preprocess.py
+<div style="break-before: page; page-break-before: always;"></div><h1 id="rusty-pipe-wip"><a class="header" href="#rusty-pipe-wip">Rusty Pipe [WiP]</a></h1>
+<p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/rusty-pipe">https://github.com/athletedecoded/s3-backup</a></p>
+<p>E2E ML Pipeline -- from data to distroless deploy</p>
+<p><img src="./assets/rusty-pipe.png" alt="image" /></p>
+<h2 id="train"><a class="header" href="#train">Train</a></h2>
+<p><strong>Download example dataset</strong></p>
+<pre><code>$ cd train
+$ make dataset
 </code></pre>
-<p><strong>Run inference</strong></p>
-<p>Assumes <code>&lt;img_name&gt;.png</code> exists in folder ./models/inputs after <code>running preprocess.py</code></p>
-<pre><code>cargo run image --name &lt;img_name&gt;
+<p><strong>Train model</strong></p>
+<pre><code>$ cargo run hymenoptera_data
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="wasm-x-rust-for-web-apps"><a class="header" href="#wasm-x-rust-for-web-apps">Wasm x Rust for Web Apps</a></h1>
-<p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/rust-mlops/tree/main/wasm">https://github.com/athletedecoded/rust-mlops</a></p>
-<p>Playing around with wasm bindings to build a Rust web app. This demo generates a random visitor number and renders to the JS front-end.</p>
-<h2 id="useage-2"><a class="header" href="#useage-2">Useage</a></h2>
-<p><strong>Install</strong></p>
-<pre><code>$ make install
+<p><strong>Convert model for Deploy</strong></p>
+<pre><code>$ python3 -m venv ~/.venv
+$ source ~/.venv/bin/activate
+$ pip install -r requirements.txt
+$ make models
 </code></pre>
-<p><strong>Compile wasm Module</strong></p>
-<pre><code>$ make build-wasm
+<h2 id="deploy"><a class="header" href="#deploy">Deploy</a></h2>
+<p><strong>Test Locally</strong></p>
+<pre><code>$ cd ../deploy
+$ make run
 </code></pre>
-<p><strong>Serve Web App Locally</strong></p>
-<pre><code>$ make serve
+<p><strong>Deploy to Azure Distroless Container</strong></p>
+<ol>
+<li>
+<p>Provision Container App <code>rusty-pipe</code> in Azure. Update Container App &gt; Settings &gt; Ingress &gt; Port = 8080.</p>
+</li>
+<li>
+<p>From Azure CLI, generate Service Principle Credentials. Capture output and add to Github Repo as <code>AZURE_CREDENTIALS</code> Actions Repository Secret.</p>
+</li>
+</ol>
+<pre><code>az ad sp create-for-rbac --name &quot;RustyPipeAccess&quot; --role contributor --scopes /subscriptions/$AZURE_SUBSCRIPTION_ID --sdk-auth
 </code></pre>
+<ol start="3">
+<li>
+<p>Generate GitHub <a href="https://github.com/settings/tokens/new?description=RustyPipe+Azure+access&amp;scopes=write:packages">PAT with write:packages access</a>. Capture output and add to Github Repo as <code>PAT</code> Actions Repository Secret.</p>
+</li>
+<li>
+<p>Push then manually trigger from GitHub Actions &gt; Trigger Auto Deploy from branch: deploy-distro</p>
+</li>
+</ol>
+<pre><code>git checkout -b deploy-distro
+git push origin deploy-distro
+</code></pre>
+<p><em>Gotchas:</em></p>
+<ul>
+<li>Rusty-Pipe Repo &gt; Settings &gt; Actions &gt; General &gt; Actions Permissions &gt; Allow all actions</li>
+<li>Rusty-Pipe Repo &gt; Settings &gt; Actions &gt; General &gt; Workflow Permissions &gt; Read &amp; Write</li>
+</ul>
+<h2 id="useage--endpoints-1"><a class="header" href="#useage--endpoints-1">Useage &amp; Endpoints</a></h2>
+<p>Local base URL https://localhost:8080</p>
+<p>Example deployed URL https://rusty-pipe.livelyisland-7ce892fe.eastus.azurecontainerapps.io/</p>
+<p><strong>GET /</strong> -- Homepage</p>
+<p><strong>POST /predict</strong> -- Predict Image</p>
+<pre><code>curl -X POST -H &quot;Content-Type: multipart/form-data&quot; -F &quot;image=@assets/ant.jpg&quot; &lt;base_url&gt;/predict
+</code></pre>
+<h2 id="todos-1"><a class="header" href="#todos-1">ToDos</a></h2>
+<p><strong>Train</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Dataset: create tch dataloader that takes train_val split with class subdirectories</li>
+<li><input disabled="" type="checkbox"/>
+Models: improve CNN, fix VGG, pass model as CLI param</li>
+<li><input disabled="" type="checkbox"/>
+Dynamic class generation --&gt; txt file --&gt; deploy</li>
+</ul>
+<p><strong>Deploy</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Fix GHA deploy -- upload models to Azure Blob via SDK</li>
+<li><input disabled="" type="checkbox"/>
+Switch from ot to onnx rt</li>
+<li><input disabled="" type="checkbox"/>
+Load testing</li>
+</ul>
 <h2 id="references-5"><a class="header" href="#references-5">References</a></h2>
 <ul>
-<li><a href="https://wasmbyexample.dev/examples/hello-world/hello-world.rust.en-us.html">Wasm By Example</a></li>
-<li><a href="https://github.com/nogibjj/rust-mlops-template/tree/main/hello-wasm-bindgen">Hello wasm</a></li>
+<li><a href="https://github.com/nogibjj/rusty-deploy">Rusty Deploy example</a></li>
+<li><a href="https://github.com/LaurentMazare/tch-rs/tree/main/examples">tch-rs examples</a></li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="parallel-rust-with-rayon"><a class="header" href="#parallel-rust-with-rayon">Parallel Rust with Rayon</a></h1>
-<p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/rust-mlops/tree/main/parallel">https://github.com/athletedecoded/rust-mlops</a></p>
-<p>A program to walk the directory tree and return duplicate files. Walk can be executed in serial or in parallel (with user defined thread option).</p>
-<h2 id="useage-3"><a class="header" href="#useage-3">Useage</a></h2>
-<pre><code>$ cd parallel
-</code></pre>
-<p><strong>Serial execution</strong></p>
-<pre><code>$ cargo run serial --path &lt;data_dir&gt;
-</code></pre>
-<p><strong>Parallel execution</strong></p>
-<pre><code># Default number of threads
-$ cargo run parallel --path &lt;data_dir&gt;
-
-# For user defined number of threads
-$ cargo run parallel --path &lt;data_dir&gt; --threads &lt;num_threads&gt;
-</code></pre>
-<p><strong>Run Tests</strong></p>
-<pre><code>$ make test
-</code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="world-clock-with-aws-lambda"><a class="header" href="#world-clock-with-aws-lambda">World Clock with AWS Lambda</a></h1>
-<p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/rust-mlops/tree/main/worldclock">https://github.com/athletedecoded/rust-mlops</a></p>
-<h2 id="useage-4"><a class="header" href="#useage-4">Useage</a></h2>
-<p>AWS Lambda function that takes a timezone code as request parameter and returns the local date and time. Currently supports AEST, EST, PST, MST. Defaults to UTC if blank request parameter.</p>
-<p><strong>Example</strong></p>
-<pre><code># request
-{
-  &quot;tz_code&quot;: &quot;AEST&quot;
-}
-
-# response
-{
-  &quot;req_id&quot;: &quot;2b0d6b70-09d8-4a78-8180-e1abe33eb5fb&quot;,
-  &quot;msg&quot;: &quot;It is 08 February 2023 6:33:39 AM in AEST&quot;
-}
-</code></pre>
-<h2 id="developer-notes"><a class="header" href="#developer-notes">Developer Notes</a></h2>
-<p><strong>Configure AWS IAM Role</strong></p>
-<ol>
-<li>Create an AWS IAM User policy with <code>AWSLambda_FullAccess</code> permissions</li>
-<li>Configure your ~/.aws/credentials file with environment variables: <code>aws_access_key_id</code>, <code>aws_secret_access_key</code>, <code>aws_role_arn</code>. </li>
-</ol>
-<p><em>Note: <code>aws_role_arn</code> is copied from the IAM user summary and is formatted as arn:aws:iam::&lt;aws_acct&gt;:user/&lt;iam_user&gt;</em></p>
-<p><strong>Install Cargo Lambda</strong></p>
-<pre><code>$ sudo apt-get install python3-venv
-$ python3 -m venv ~/.venv
-$ source ~/.venv/bin/activate
-$ pip3 install cargo-lambda
-</code></pre>
-<p><strong>Activate .venv</strong> </p>
-<pre><code>$ source ~/.venv/bin/activate
-</code></pre>
-<p><strong>Build Binary</strong></p>
-<p><em>For x86_64</em></p>
-<pre><code>$ make release
-</code></pre>
-<p><em>For arm64</em></p>
-<pre><code>$ make release-arm
-</code></pre>
-<p><strong>Invoke Lambda fxn</strong></p>
-<pre><code>$ make invoke
-</code></pre>
-<p><strong>Deploy to AWS Lambda</strong></p>
-<pre><code>$ make deploy
-</code></pre>
-<h2 id="references-6"><a class="header" href="#references-6">References</a></h2>
-<ul>
-<li><a href="https://github.com/awslabs/aws-lambda-rust-runtime">AWS Lambda Rust Runtime</a></li>
-<li><a href="https://rust-lang-nursery.github.io/rust-cookbook/datetime.html">Rust Date and Time</a></li>
-<li><a href="https://crates.io/crates/chrono-tz">chrono-tz crate docs</a></li>
-</ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="basic-calculator"><a class="header" href="#basic-calculator">Basic Calculator</a></h1>
-<p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/rust-mlops/tree/main/calculator">https://github.com/athletedecoded/rust-mlops</a></p>
-<p>A basic CLI calculator that supports the operators: </p>
-<ul>
-<li>Add: &quot;+&quot;</li>
-<li>Subract: &quot;-&quot;</li>
-<li>Multiply: &quot;x&quot;</li>
-<li>Divide: &quot;/&quot;</li>
-</ul>
-<h3 id="useage-5"><a class="header" href="#useage-5">Useage</a></h3>
-<pre><code>$ cd calculator
-$ cargo run calc --a &lt;float&gt; --b &lt;float&gt; --op &lt;operator&gt;
-# ex. cargo run calc --a 3 --b 5 --op x
-</code></pre>
-<h3 id="unit-tests"><a class="header" href="#unit-tests">Unit Tests</a></h3>
-<pre><code>$ make test
-</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="mlops-mini-projects"><a class="header" href="#mlops-mini-projects">MLOPs Mini Projects</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="data-engineering-mini-projects"><a class="header" href="#data-engineering-mini-projects">Data Engineering Mini Projects</a></h1>
 
                     </main>
 

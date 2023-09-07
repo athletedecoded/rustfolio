@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Mini Wasm Demo - rustfolio</title>
+        <title>E2E Distroless ML Pipeline - rustfolio</title>
 
 
         <!-- Custom HTML head -->
@@ -83,16 +83,38 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="rustfolio.html"><strong aria-hidden="true">1.</strong> Rustfolio</a></li><li class="chapter-item expanded "><a href="s3_cli.html"><strong aria-hidden="true">2.</strong> AWS S3 CLI in Rust</a></li><li class="chapter-item expanded "><a href="img_comp.html"><strong aria-hidden="true">3.</strong> EFS Image Compression</a></li><li class="chapter-item expanded "><a href="s3_backup.html"><strong aria-hidden="true">4.</strong> Automated S3 Backup w Serverless Rust</a></li><li class="chapter-item expanded "><a href="hf_micro.html"><strong aria-hidden="true">5.</strong> Dockerized API Proxy for HuggingFace</a></li><li class="chapter-item expanded "><a href="classifier.html"><strong aria-hidden="true">6.</strong> Mini Image Classifier</a></li><li class="chapter-item expanded "><a href="wasm.html" class="active"><strong aria-hidden="true">7.</strong> Mini Wasm Demo</a></li><li class="chapter-item expanded "><a href="multithread.html"><strong aria-hidden="true">8.</strong> Mini Multithreading</a></li><li class="chapter-item expanded "><a href="worldclock.html"><strong aria-hidden="true">9.</strong> Mini World Clock</a></li><li class="chapter-item expanded "><a href="calculator.html"><strong aria-hidden="true">10.</strong> Mini Calculator</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="rustfolio.html"><strong aria-hidden="true">1.</strong> Rustfolio</a></li><li class="chapter-item expanded "><a href="s3_cli.html"><strong aria-hidden="true">2.</strong> AWS S3 CLI in Rust</a></li><li class="chapter-item expanded "><a href="img_comp.html"><strong aria-hidden="true">3.</strong> EFS Image Compression</a></li><li class="chapter-item expanded "><a href="s3_backup.html"><strong aria-hidden="true">4.</strong> Automated S3 Backup w Serverless Rust</a></li><li class="chapter-item expanded "><a href="hf_micro.html"><strong aria-hidden="true">5.</strong> Dockerized API Proxy for HuggingFace</a></li><li class="chapter-item expanded "><a href="rusty_pipe.html" class="active"><strong aria-hidden="true">6.</strong> E2E Distroless ML Pipeline</a></li><li class="chapter-item expanded "><a href="https://github.com/athletedecoded/rust-mlops.html"><strong aria-hidden="true">7.</strong> MLOPs Mini Projects</a></li><li class="chapter-item expanded "><a href="https://github.com/athletedecoded/rust-data-engineering.html"><strong aria-hidden="true">8.</strong> Data Engineering Mini Projects</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
@@ -144,34 +166,97 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="wasm-x-rust-for-web-apps"><a class="header" href="#wasm-x-rust-for-web-apps">Wasm x Rust for Web Apps</a></h1>
-<p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/rust-mlops/tree/main/wasm">https://github.com/athletedecoded/rust-mlops</a></p>
-<p>Playing around with wasm bindings to build a Rust web app. This demo generates a random visitor number and renders to the JS front-end.</p>
-<h2 id="useage"><a class="header" href="#useage">Useage</a></h2>
-<p><strong>Install</strong></p>
-<pre><code>$ make install
+                        <h1 id="rusty-pipe-wip"><a class="header" href="#rusty-pipe-wip">Rusty Pipe [WiP]</a></h1>
+<p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/rusty-pipe">https://github.com/athletedecoded/s3-backup</a></p>
+<p>E2E ML Pipeline -- from data to distroless deploy</p>
+<p><img src="./assets/rusty-pipe.png" alt="image" /></p>
+<h2 id="train"><a class="header" href="#train">Train</a></h2>
+<p><strong>Download example dataset</strong></p>
+<pre><code>$ cd train
+$ make dataset
 </code></pre>
-<p><strong>Compile wasm Module</strong></p>
-<pre><code>$ make build-wasm
+<p><strong>Train model</strong></p>
+<pre><code>$ cargo run hymenoptera_data
 </code></pre>
-<p><strong>Serve Web App Locally</strong></p>
-<pre><code>$ make serve
+<p><strong>Convert model for Deploy</strong></p>
+<pre><code>$ python3 -m venv ~/.venv
+$ source ~/.venv/bin/activate
+$ pip install -r requirements.txt
+$ make models
 </code></pre>
+<h2 id="deploy"><a class="header" href="#deploy">Deploy</a></h2>
+<p><strong>Test Locally</strong></p>
+<pre><code>$ cd ../deploy
+$ make run
+</code></pre>
+<p><strong>Deploy to Azure Distroless Container</strong></p>
+<ol>
+<li>
+<p>Provision Container App <code>rusty-pipe</code> in Azure. Update Container App &gt; Settings &gt; Ingress &gt; Port = 8080.</p>
+</li>
+<li>
+<p>From Azure CLI, generate Service Principle Credentials. Capture output and add to Github Repo as <code>AZURE_CREDENTIALS</code> Actions Repository Secret.</p>
+</li>
+</ol>
+<pre><code>az ad sp create-for-rbac --name &quot;RustyPipeAccess&quot; --role contributor --scopes /subscriptions/$AZURE_SUBSCRIPTION_ID --sdk-auth
+</code></pre>
+<ol start="3">
+<li>
+<p>Generate GitHub <a href="https://github.com/settings/tokens/new?description=RustyPipe+Azure+access&amp;scopes=write:packages">PAT with write:packages access</a>. Capture output and add to Github Repo as <code>PAT</code> Actions Repository Secret.</p>
+</li>
+<li>
+<p>Push then manually trigger from GitHub Actions &gt; Trigger Auto Deploy from branch: deploy-distro</p>
+</li>
+</ol>
+<pre><code>git checkout -b deploy-distro
+git push origin deploy-distro
+</code></pre>
+<p><em>Gotchas:</em></p>
+<ul>
+<li>Rusty-Pipe Repo &gt; Settings &gt; Actions &gt; General &gt; Actions Permissions &gt; Allow all actions</li>
+<li>Rusty-Pipe Repo &gt; Settings &gt; Actions &gt; General &gt; Workflow Permissions &gt; Read &amp; Write</li>
+</ul>
+<h2 id="useage--endpoints"><a class="header" href="#useage--endpoints">Useage &amp; Endpoints</a></h2>
+<p>Local base URL https://localhost:8080</p>
+<p>Example deployed URL https://rusty-pipe.livelyisland-7ce892fe.eastus.azurecontainerapps.io/</p>
+<p><strong>GET /</strong> -- Homepage</p>
+<p><strong>POST /predict</strong> -- Predict Image</p>
+<pre><code>curl -X POST -H &quot;Content-Type: multipart/form-data&quot; -F &quot;image=@assets/ant.jpg&quot; &lt;base_url&gt;/predict
+</code></pre>
+<h2 id="todos"><a class="header" href="#todos">ToDos</a></h2>
+<p><strong>Train</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Dataset: create tch dataloader that takes train_val split with class subdirectories</li>
+<li><input disabled="" type="checkbox"/>
+Models: improve CNN, fix VGG, pass model as CLI param</li>
+<li><input disabled="" type="checkbox"/>
+Dynamic class generation --&gt; txt file --&gt; deploy</li>
+</ul>
+<p><strong>Deploy</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Fix GHA deploy -- upload models to Azure Blob via SDK</li>
+<li><input disabled="" type="checkbox"/>
+Switch from ot to onnx rt</li>
+<li><input disabled="" type="checkbox"/>
+Load testing</li>
+</ul>
 <h2 id="references"><a class="header" href="#references">References</a></h2>
 <ul>
-<li><a href="https://wasmbyexample.dev/examples/hello-world/hello-world.rust.en-us.html">Wasm By Example</a></li>
-<li><a href="https://github.com/nogibjj/rust-mlops-template/tree/main/hello-wasm-bindgen">Hello wasm</a></li>
+<li><a href="https://github.com/nogibjj/rusty-deploy">Rusty Deploy example</a></li>
+<li><a href="https://github.com/LaurentMazare/tch-rs/tree/main/examples">tch-rs examples</a></li>
 </ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="classifier.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="hf_micro.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="multithread.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="https://github.com/athletedecoded/rust-mlops.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -181,11 +266,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="classifier.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="hf_micro.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="multithread.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="https://github.com/athletedecoded/rust-mlops.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
