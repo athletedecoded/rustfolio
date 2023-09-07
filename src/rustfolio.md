@@ -4,6 +4,9 @@ Github [@athletedecoded](https://github.com/athletedecoded)
 
 Learning by building Rust for MLOps projects at Duke Univeristy with [Noah Gift](https://github.com/noahgift).
 
+* [Rust MLOps Projects](https://github.com/athletedecoded/rust-mlops)
+* [Rust Data Engineering Projects](https://github.com/athletedecoded/rust-data-engineering)
+
 ### To use this mdbook template
 
 **Fork/clone from Github Repo**
