@@ -84,7 +84,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="rustfolio.html"><strong aria-hidden="true">1.</strong> Rustfolio</a></li><li class="chapter-item expanded "><a href="s3_cli.html"><strong aria-hidden="true">2.</strong> AWS S3 CLI in Rust</a></li><li class="chapter-item expanded "><a href="img_comp.html"><strong aria-hidden="true">3.</strong> EFS Image Compression</a></li><li class="chapter-item expanded "><a href="s3_backup.html"><strong aria-hidden="true">4.</strong> Automated S3 Backup w Serverless Rust</a></li><li class="chapter-item expanded "><a href="hf_micro.html"><strong aria-hidden="true">5.</strong> Dockerized API Proxy for HuggingFace</a></li><li class="chapter-item expanded "><a href="rusty_pipe.html"><strong aria-hidden="true">6.</strong> E2E Distroless ML Pipeline</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="rustfolio.html"><strong aria-hidden="true">1.</strong> Rustfolio</a></li><li class="chapter-item expanded "><a href="s3_cli.html"><strong aria-hidden="true">2.</strong> AWS S3 CLI in Rust</a></li><li class="chapter-item expanded "><a href="img_comp.html"><strong aria-hidden="true">3.</strong> EFS Image Compression</a></li><li class="chapter-item expanded "><a href="s3_backup.html"><strong aria-hidden="true">4.</strong> Automated S3 Backup w Serverless Rust</a></li><li class="chapter-item expanded "><a href="hf_micro.html"><strong aria-hidden="true">5.</strong> Dockerized API Proxy for HuggingFace</a></li><li class="chapter-item expanded "><a href="rusty_pipe.html"><strong aria-hidden="true">6.</strong> E2E Distroless ML Pipeline</a></li><li class="chapter-item expanded "><a href="rusty_ds.html"><strong aria-hidden="true">7.</strong> Rust for Data Science</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -694,6 +694,57 @@ Load testing</li>
 <li><a href="https://github.com/nogibjj/rusty-deploy">Rusty Deploy example</a></li>
 <li><a href="https://github.com/LaurentMazare/tch-rs/tree/main/examples">tch-rs examples</a></li>
 </ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="rusty-cicd-data-science"><a class="header" href="#rusty-cicd-data-science">Rusty CI/CD Data Science</a></h1>
+<p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/rusty-ds">https://github.com/athletedecoded/rusty-ds</a></p>
+<p>Rust CLI tool for EDA with Polars + EvCxR kernel for Jupyter</p>
+<h2 id="setup-2"><a class="header" href="#setup-2">Setup</a></h2>
+<pre><code># Install Rust
+make install
+
+# Install evcxr_jupyter
+make evcxr
+
+# Check versions
+make toolchain
+</code></pre>
+<h2 id="rust-x-jupyter"><a class="header" href="#rust-x-jupyter">Rust x Jupyter</a></h2>
+<ol>
+<li>Launch <code>./notebook.ipynb</code> &gt;&gt; Select Kernel &gt;&gt; Jupyter Kernel &gt;&gt; Rust</li>
+<li>Run All Cells</li>
+</ol>
+<h2 id="rust-eda-tool"><a class="header" href="#rust-eda-tool">Rust EDA Tool</a></h2>
+<p><strong>For CSV files</strong></p>
+<pre><code># If csv file includes headers
+cargo run csv --path /path/to/data.csv --headers
+
+# If csv doesn't have headers
+cargo run csv --path /path/to/data.csv
+</code></pre>
+<p><strong>For JSON files</strong></p>
+<pre><code>cargo run json --path /path/to/data.csv
+</code></pre>
+<h2 id="files"><a class="header" href="#files">Files</a></h2>
+<ul>
+<li><code>.devcontainer/</code> -- configures local development container environment</li>
+<li><code>.github/workflows/CICD.yml</code> -- triggers CI/CD on git push and pull request</li>
+<li><code>data/</code> -- sample data files for unit testing</li>
+<li><code>src/lib.rs</code> -- shared library for <code>main.rs</code> and <code>notebook.ipynb</code></li>
+<li><code>src/main.rs</code> -- rusty-ds CLI script</li>
+<li><code>cargo.toml</code> -- cargo dependencies</li>
+<li><code>notebook.ipynb</code> -- Rust x Jupyter using EvCxR kernel</li>
+<li><code>Makefile</code> -- build commands and utilities</li>
+</ul>
+<h2 id="cicd-1"><a class="header" href="#cicd-1">CI/CD</a></h2>
+<p>On git push/pull request the CI/CD flow is triggered using Github Actions:</p>
+<ol>
+<li>Install and validate Rust toolchain</li>
+<li>Format and lint code</li>
+<li>Run unit tests</li>
+<li>Build binary release</li>
+<li>Lint Dockerfile</li>
+<li>Build distroless rusty-ds image</li>
+<li>Push image to <a href="https://github.com/athletedecoded?tab=packages">Github Container Registry</a></li>
+</ol>
 
                     </main>
 

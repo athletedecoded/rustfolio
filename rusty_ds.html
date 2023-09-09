@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Automated S3 Backup w Serverless Rust - rustfolio</title>
+        <title>Rust for Data Science - rustfolio</title>
 
 
         <!-- Custom HTML head -->
@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="rustfolio.html"><strong aria-hidden="true">1.</strong> Rustfolio</a></li><li class="chapter-item expanded "><a href="s3_cli.html"><strong aria-hidden="true">2.</strong> AWS S3 CLI in Rust</a></li><li class="chapter-item expanded "><a href="img_comp.html"><strong aria-hidden="true">3.</strong> EFS Image Compression</a></li><li class="chapter-item expanded "><a href="s3_backup.html" class="active"><strong aria-hidden="true">4.</strong> Automated S3 Backup w Serverless Rust</a></li><li class="chapter-item expanded "><a href="hf_micro.html"><strong aria-hidden="true">5.</strong> Dockerized API Proxy for HuggingFace</a></li><li class="chapter-item expanded "><a href="rusty_pipe.html"><strong aria-hidden="true">6.</strong> E2E Distroless ML Pipeline</a></li><li class="chapter-item expanded "><a href="rusty_ds.html"><strong aria-hidden="true">7.</strong> Rust for Data Science</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="rustfolio.html"><strong aria-hidden="true">1.</strong> Rustfolio</a></li><li class="chapter-item expanded "><a href="s3_cli.html"><strong aria-hidden="true">2.</strong> AWS S3 CLI in Rust</a></li><li class="chapter-item expanded "><a href="img_comp.html"><strong aria-hidden="true">3.</strong> EFS Image Compression</a></li><li class="chapter-item expanded "><a href="s3_backup.html"><strong aria-hidden="true">4.</strong> Automated S3 Backup w Serverless Rust</a></li><li class="chapter-item expanded "><a href="hf_micro.html"><strong aria-hidden="true">5.</strong> Dockerized API Proxy for HuggingFace</a></li><li class="chapter-item expanded "><a href="rusty_pipe.html"><strong aria-hidden="true">6.</strong> E2E Distroless ML Pipeline</a></li><li class="chapter-item expanded "><a href="rusty_ds.html" class="active"><strong aria-hidden="true">7.</strong> Rust for Data Science</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -166,90 +166,66 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="automated-s3-backup-with-aws-x-rust"><a class="header" href="#automated-s3-backup-with-aws-x-rust">Automated S3 Backup with AWS x Rust</a></h1>
-<p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/s3-backup">https://github.com/athletedecoded/s3-backup</a></p>
-<p>Automated serverless S3 backup using AWS Lambda x Rust</p>
-<p><img src="./assets/s3-backup.png" alt="image" /></p>
-<h2 id="what-i-learnt"><a class="header" href="#what-i-learnt">What I Learnt</a></h2>
-<ul>
-<li>Deploying AWS serverless using Lambda x S3 trigger</li>
-<li>Configuring S3 Access Points and Roles</li>
-</ul>
-<h2 id="developer-setup"><a class="header" href="#developer-setup">Developer Setup</a></h2>
-<p><strong>Pre-Configure AWS</strong></p>
-<ol>
-<li>Create an IAM User policy for &quot;LambdaDeveloper&quot; with <code>AWSLambda_FullAccess</code> permissions and added custom inline permission config</li>
-</ol>
-<pre><code>{
-    &quot;Version&quot;: &quot;2012-10-17&quot;,
-    &quot;Statement&quot;: [
-        {
-            &quot;Sid&quot;: &quot;PermissionsToDeploy&quot;,
-            &quot;Effect&quot;: &quot;Allow&quot;,
-            &quot;Action&quot;: [
-                &quot;iam:CreateRole&quot;,
-                &quot;iam:CreatePolicy&quot;,
-                &quot;iam:PutRolePolicy&quot;,
-                &quot;iam:AttachRolePolicy&quot;,
-                &quot;iam:UpdateAssumeRolePolicy&quot;
-            ],
-            &quot;Resource&quot;: &quot;*&quot;
-        }
-    ]
-}
-</code></pre>
-<ol start="2">
-<li>Add &quot;LambdaDeveloper&quot; keys to your local ~/.aws/credentials file with environment variables: </li>
-</ol>
-<ul>
-<li>aws_access_key_id</li>
-<li>aws_secret_access_key</li>
-<li>aws_role_arn</li>
-<li>region </li>
-</ul>
-<p><em>Note: <code>aws_role_arn</code> is copied from the IAM user summary and is formatted as arn:aws:iam::&lt;aws_acct&gt;:user/&lt;iam_user&gt;</em></p>
-<ol start="3">
-<li>Create an IAM Role policy for &quot;S3xLambdaAccessRole&quot; with <code>AmazonS3FullAccess</code> and <code>AWSLambdaBasicExecutionRole</code> permissions</li>
-<li>Allocate 3 x S3 Buckets (SourceBucket, OutputBucket, RubbishBucket) and add an Access Point to each</li>
-</ol>
-<p><strong>Deploy Lambda Function</strong></p>
-<pre><code># Install cargo lambda
-$ python3 -m venv ~/.venv
-$ source ~/.venv/bin/activate
-$ make install
+                        <h1 id="rusty-cicd-data-science"><a class="header" href="#rusty-cicd-data-science">Rusty CI/CD Data Science</a></h1>
+<p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/rusty-ds">https://github.com/athletedecoded/rusty-ds</a></p>
+<p>Rust CLI tool for EDA with Polars + EvCxR kernel for Jupyter</p>
+<h2 id="setup"><a class="header" href="#setup">Setup</a></h2>
+<pre><code># Install Rust
+make install
 
-# Build binary
-$ make release
+# Install evcxr_jupyter
+make evcxr
 
-# Deploy to AWS
-$ make deploy
+# Check versions
+make toolchain
 </code></pre>
-<p><strong>AWS Permissions</strong></p>
+<h2 id="rust-x-jupyter"><a class="header" href="#rust-x-jupyter">Rust x Jupyter</a></h2>
 <ol>
-<li>From the AWS Lambda Console &gt; Functions &gt; s3-backup &gt; Configuration &gt; Permissions &gt; change Execution role to preconfigured &quot;S3xLambdaAccessRole&quot;</li>
-<li>From the AWS Lambda Console &gt; Functions &gt; s3-backup &gt; Configuration &gt; Environment variables &gt; set the following env variables coinciding with S3 Access Point ARNs: <code>SRC_AP_ARN</code>, <code>DEST_AP_ARN</code>, <code>RUBBISH_AP_ARN</code></li>
+<li>Launch <code>./notebook.ipynb</code> &gt;&gt; Select Kernel &gt;&gt; Jupyter Kernel &gt;&gt; Rust</li>
+<li>Run All Cells</li>
 </ol>
-<p><em>NB: Access Point ARNs will be of the format arn:aws:s3:<region>:<aws-id>:accesspoint/<access-point-name></em></p>
-<h2 id="references"><a class="header" href="#references">References</a></h2>
+<h2 id="rust-eda-tool"><a class="header" href="#rust-eda-tool">Rust EDA Tool</a></h2>
+<p><strong>For CSV files</strong></p>
+<pre><code># If csv file includes headers
+cargo run csv --path /path/to/data.csv --headers
+
+# If csv doesn't have headers
+cargo run csv --path /path/to/data.csv
+</code></pre>
+<p><strong>For JSON files</strong></p>
+<pre><code>cargo run json --path /path/to/data.csv
+</code></pre>
+<h2 id="files"><a class="header" href="#files">Files</a></h2>
 <ul>
-<li><a href="https://www.cargo-lambda.info/">Cargo Lambda for Rust</a></li>
-<li><a href="https://docs.aws.amazon.com/sdk-for-rust/latest/dg/lambda.html">Using the AWS SDK for Rust in AWS Lambda function</a></li>
-<li><a href="https://docs.rs/aws_lambda_events/latest/aws_lambda_events/index.html">AWS Lambda Events Docs for Rust</a></li>
-<li><a href="https://github.com/aws-samples/serverless-rust-demo/">AWS Serverless Rust Demo</a></li>
-<li><a href="https://aws.amazon.com/getting-started/hands-on/amazon-s3-object-lambda-to-dynamically-watermark-images/">AWS Tutorial: S3 Object Lambda</a></li>
+<li><code>.devcontainer/</code> -- configures local development container environment</li>
+<li><code>.github/workflows/CICD.yml</code> -- triggers CI/CD on git push and pull request</li>
+<li><code>data/</code> -- sample data files for unit testing</li>
+<li><code>src/lib.rs</code> -- shared library for <code>main.rs</code> and <code>notebook.ipynb</code></li>
+<li><code>src/main.rs</code> -- rusty-ds CLI script</li>
+<li><code>cargo.toml</code> -- cargo dependencies</li>
+<li><code>notebook.ipynb</code> -- Rust x Jupyter using EvCxR kernel</li>
+<li><code>Makefile</code> -- build commands and utilities</li>
 </ul>
+<h2 id="cicd"><a class="header" href="#cicd">CI/CD</a></h2>
+<p>On git push/pull request the CI/CD flow is triggered using Github Actions:</p>
+<ol>
+<li>Install and validate Rust toolchain</li>
+<li>Format and lint code</li>
+<li>Run unit tests</li>
+<li>Build binary release</li>
+<li>Lint Dockerfile</li>
+<li>Build distroless rusty-ds image</li>
+<li>Push image to <a href="https://github.com/athletedecoded?tab=packages">Github Container Registry</a></li>
+</ol>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="img_comp.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="rusty_pipe.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="hf_micro.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -257,13 +233,10 @@ $ make deploy
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="img_comp.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="rusty_pipe.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="hf_micro.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
             </nav>
 
         </div>
