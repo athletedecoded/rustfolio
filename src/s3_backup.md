@@ -1,10 +1,13 @@
-# Automated S3 Backup with AWS x Rust
-
 **Project Repo:** [https://github.com/athletedecoded/s3-backup](https://github.com/athletedecoded/s3-backup)
+
+
+![CI/CD Pipeline](https://github.com/athletedecoded/s3-backup/actions/workflows/deploy.yml/badge.svg)
+
+# IDS721 Spring 2023 Project 3 - Rust Serverless with AWS
 
 Automated serverless S3 backup using AWS Lambda x Rust  
 
-![image](./assets/s3-backup.png)
+![image](./assets/arch.png)
 
 
 ## What I Learnt
@@ -68,7 +71,7 @@ $ make deploy
 1. From the AWS Lambda Console > Functions > s3-backup > Configuration > Permissions > change Execution role to preconfigured "S3xLambdaAccessRole"
 2. From the AWS Lambda Console > Functions > s3-backup > Configuration > Environment variables > set the following env variables coinciding with S3 Access Point ARNs: `SRC_AP_ARN`, `DEST_AP_ARN`, `RUBBISH_AP_ARN`
 
-*NB: Access Point ARNs will be of the format arn:aws:s3:<region>:<aws-id>:accesspoint/<access-point-name>*
+*NB: Access Point ARNs will be of the format arn:aws:s3:[region]:[aws-id]:accesspoint/[access-point-name]*
 
 ## References
 
@@ -77,4 +80,3 @@ $ make deploy
 * [AWS Lambda Events Docs for Rust](https://docs.rs/aws_lambda_events/latest/aws_lambda_events/index.html)
 * [AWS Serverless Rust Demo](https://github.com/aws-samples/serverless-rust-demo/)
 * [AWS Tutorial: S3 Object Lambda](https://aws.amazon.com/getting-started/hands-on/amazon-s3-object-lambda-to-dynamically-watermark-images/)
-

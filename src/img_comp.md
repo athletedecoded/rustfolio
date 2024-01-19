@@ -1,8 +1,11 @@
-# Image Compression for Big Data with EFS
-
 **Project Repo:** [https://github.com/athletedecoded/img-compress](https://github.com/athletedecoded/img-compress)
 
-Image Compression for Big Data using EFS x Lambda x Rust. Uses downsampling + filtering to perform inplace image compression in parallel and reduce the memory cost of big image data storage. Includes upsampling invocation option to restore image size.
+
+![CI/CD Pipeline](https://github.com/athletedecoded/img-compress/actions/workflows/deploy.yml/badge.svg)
+
+# IDS721 Spring 2023 Project 4 - Image Compression for Big Data
+
+Image Compression for Big Data using EFS x Lambda x Rust. Uses downsampling + filter to perform inplace image compression in parallel and reduce the memory cost of big image data storage. Includes upsampling invocation option to restore image size.
 
 ![image](./assets/img-comp.png)
 

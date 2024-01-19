@@ -1,8 +1,19 @@
+**Project Repo:** [https://github.com/athletedecoded/rusty-ds](https://github.com/athletedecoded/rusty-ds)
+
+
 # CI/CD Data Science with Rust
+
+[![CI/CD Pipeline](https://github.com/athletedecoded/rusty-ds/actions/workflows/CICD.yml/badge.svg)](https://github.com/athletedecoded/rusty-ds/actions/workflows/CICD.yml)
+
+![Stable](https://byob.yarr.is/athletedecoded/rusty-ds/stable)
+![Beta](https://byob.yarr.is/athletedecoded/rusty-ds/beta)
+![Nightly](https://byob.yarr.is/athletedecoded/rusty-ds/nightly)
 
 CLI and Notebook EDA using polars/plotters/evcxr + CI/CD distroless deployment
 
-**Project Repo:** [https://github.com/athletedecoded/rusty-ds](https://github.com/athletedecoded/rusty-ds)
+"Futureproofs" by testing build across rust releases: stable, beta, nightly
+
+**[DEMO](https://youtu.be/ZJXYvAEZFbM)**
 
 
 ## Setup
@@ -40,6 +51,9 @@ cargo run summary --path </path/to/data>
 ```
 
 **Plot**
+
+![image](./plots/scatter.png)
+
 ```
 cargo run plot --path </path/to/data> <--headers> --x <col_name> --y <col_name>
 # ex. cargo run plot --path ./data/sample.csv --headers --x fats_g --y calories
@@ -67,13 +81,16 @@ make test
 
 On git push/pull request the CI/CD flow is triggered using Github Actions:
 
-1. Install and validate Rust toolchain
+1. Install and validate Rust toolchain for each of stable/beta/nightly release
 2. Format and lint code
 3. Run unit tests
 4. Build binary release
 5. Lint Dockerfile
 6. Build distroless rusty-ds image
 7. Push image to [Github Container Registry](https://github.com/athletedecoded?tab=packages)
+
+NB: To build and push to GHCR, uncomment section in `.github/workflows/CICD.yml`
+
 
 ## ToDos
 - [ ] Add error handling for column name DNE

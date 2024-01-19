@@ -1,6 +1,9 @@
-# Rusty Pipe [WiP]
-
 **Project Repo:** [https://github.com/athletedecoded/rusty-pipe](https://github.com/athletedecoded/rusty-pipe)
+
+
+![CI/CD Pipeline](https://github.com/athletedecoded/rusty-pipe/actions/workflows/az_deploy.yml/badge.svg)
+
+# Rusty Pipe [WiP]
 
 E2E ML Pipeline -- from data to distroless deploy
 

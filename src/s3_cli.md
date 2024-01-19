@@ -1,6 +1,9 @@
-# Rust AWS S3 CLI
-
 **Project Repo:** [https://github.com/athletedecoded/rust-s3-cli](https://github.com/athletedecoded/rust-s3-cli)
+
+
+![CI/CD Pipeline](https://github.com/athletedecoded/rust-s3-cli/actions/workflows/deploy.yml/badge.svg)
+
+# AWS S3 Rust CLI Tool
 
 The current [AWS CLI](https://github.com/aws/aws-cli/tree/v2) is written in Python. For this project I have built a mini AWS S3 CLI using Rust which supports CRUD operations for buckets and objects.
 
@@ -18,7 +21,7 @@ The current [AWS CLI](https://github.com/aws/aws-cli/tree/v2) is written in Pyth
 
 2. Configure your [~/.aws/credentials file](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html#cli-configure-files-where) with environment variables: `aws_access_key_id`, `aws_secret_access_key` and `region`
 
-## Run
+## Useage
 
 **List all S3 buckets**
 ```
@@ -90,4 +93,3 @@ $ make release
 * [AWS Toolkit Credential Profile](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html#cli-configure-files-where)
 * [AWS Credentials for VS Code](https://docs.aws.amazon.com/toolkit-for-vscode/latest/userguide/setup-credentials.html)
 * [AWS IAM User Policy for S3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/security-iam-awsmanpol.html)
-
