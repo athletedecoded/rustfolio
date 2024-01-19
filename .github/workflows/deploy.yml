@@ -24,6 +24,9 @@ jobs:
 
       - run: mdbook build
 
+      - name: Sync content
+        run: make sync
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         if: ${{ github.ref == 'refs/heads/main' }}
