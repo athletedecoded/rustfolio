@@ -173,9 +173,15 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="cicd-data-science-with-rust"><a class="header" href="#cicd-data-science-with-rust">CI/CD Data Science with Rust</a></h1>
+                        <p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/rusty-ds">https://github.com/athletedecoded/rusty-ds</a></p>
+<h1 id="cicd-data-science-with-rust"><a class="header" href="#cicd-data-science-with-rust">CI/CD Data Science with Rust</a></h1>
+<p><a href="https://github.com/athletedecoded/rusty-ds/actions/workflows/CICD.yml"><img src="https://github.com/athletedecoded/rusty-ds/actions/workflows/CICD.yml/badge.svg" alt="CI/CD Pipeline" /></a></p>
+<p><img src="https://byob.yarr.is/athletedecoded/rusty-ds/stable" alt="Stable" />
+<img src="https://byob.yarr.is/athletedecoded/rusty-ds/beta" alt="Beta" />
+<img src="https://byob.yarr.is/athletedecoded/rusty-ds/nightly" alt="Nightly" /></p>
 <p>CLI and Notebook EDA using polars/plotters/evcxr + CI/CD distroless deployment</p>
-<p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/rusty-ds">https://github.com/athletedecoded/rusty-ds</a></p>
+<p>&quot;Futureproofs&quot; by testing build across rust releases: stable, beta, nightly</p>
+<p><strong><a href="https://youtu.be/ZJXYvAEZFbM">DEMO</a></strong></p>
 <h2 id="setup"><a class="header" href="#setup">Setup</a></h2>
 <pre><code># Install Rust
 make install
@@ -203,6 +209,7 @@ cargo run summary --path &lt;/path/to/data&gt;
 # ex. cargo run summary --path ./data/sample.json
 </code></pre>
 <p><strong>Plot</strong></p>
+<p><img src="./plots/scatter.png" alt="image" /></p>
 <pre><code>cargo run plot --path &lt;/path/to/data&gt; &lt;--headers&gt; --x &lt;col_name&gt; --y &lt;col_name&gt;
 # ex. cargo run plot --path ./data/sample.csv --headers --x fats_g --y calories
 # ex. cargo run plot --path ./data/sample.json --x fats_g --y calories
@@ -224,7 +231,7 @@ cargo run summary --path &lt;/path/to/data&gt;
 <h2 id="cicd"><a class="header" href="#cicd">CI/CD</a></h2>
 <p>On git push/pull request the CI/CD flow is triggered using Github Actions:</p>
 <ol>
-<li>Install and validate Rust toolchain</li>
+<li>Install and validate Rust toolchain for each of stable/beta/nightly release</li>
 <li>Format and lint code</li>
 <li>Run unit tests</li>
 <li>Build binary release</li>
@@ -232,6 +239,7 @@ cargo run summary --path &lt;/path/to/data&gt;
 <li>Build distroless rusty-ds image</li>
 <li>Push image to <a href="https://github.com/athletedecoded?tab=packages">Github Container Registry</a></li>
 </ol>
+<p>NB: To build and push to GHCR, uncomment section in <code>.github/workflows/CICD.yml</code></p>
 <h2 id="todos"><a class="header" href="#todos">ToDos</a></h2>
 <ul>
 <li><input disabled="" type="checkbox"/>

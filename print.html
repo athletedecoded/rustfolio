@@ -205,8 +205,9 @@
 </ul>
 <hr>
 <h3 id="credits-athletedecoded"><a class="header" href="#credits-athletedecoded">Credits: <a href="https://github.com/athletedecoded">athletedecoded</a></a></h3>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="rust-aws-s3-cli"><a class="header" href="#rust-aws-s3-cli">Rust AWS S3 CLI</a></h1>
-<p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/rust-s3-cli">https://github.com/athletedecoded/rust-s3-cli</a></p>
+<div style="break-before: page; page-break-before: always;"></div><p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/rust-s3-cli">https://github.com/athletedecoded/rust-s3-cli</a></p>
+<p><img src="https://github.com/athletedecoded/rust-s3-cli/actions/workflows/deploy.yml/badge.svg" alt="CI/CD Pipeline" /></p>
+<h1 id="aws-s3-rust-cli-tool"><a class="header" href="#aws-s3-rust-cli-tool">AWS S3 Rust CLI Tool</a></h1>
 <p>The current <a href="https://github.com/aws/aws-cli/tree/v2">AWS CLI</a> is written in Python. For this project I have built a mini AWS S3 CLI using Rust which supports CRUD operations for buckets and objects.</p>
 <p><img src="./assets/s3-cli.png" alt="image" /></p>
 <h2 id="project-goalsoutcomes"><a class="header" href="#project-goalsoutcomes">Project Goals/Outcomes</a></h2>
@@ -224,7 +225,7 @@
 <p>Configure your <a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html#cli-configure-files-where">~/.aws/credentials file</a> with environment variables: <code>aws_access_key_id</code>, <code>aws_secret_access_key</code> and <code>region</code></p>
 </li>
 </ol>
-<h2 id="run"><a class="header" href="#run">Run</a></h2>
+<h2 id="useage"><a class="header" href="#useage">Useage</a></h2>
 <p><strong>List all S3 buckets</strong></p>
 <pre><code>$ cargo run list
 </code></pre>
@@ -284,11 +285,12 @@ CI/CD with Github Actions</li>
 <li><a href="https://docs.aws.amazon.com/toolkit-for-vscode/latest/userguide/setup-credentials.html">AWS Credentials for VS Code</a></li>
 <li><a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/security-iam-awsmanpol.html">AWS IAM User Policy for S3</a></li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="image-compression-for-big-data-with-efs"><a class="header" href="#image-compression-for-big-data-with-efs">Image Compression for Big Data with EFS</a></h1>
-<p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/img-compress">https://github.com/athletedecoded/img-compress</a></p>
-<p>Image Compression for Big Data using EFS x Lambda x Rust. Uses downsampling + filtering to perform inplace image compression in parallel and reduce the memory cost of big image data storage. Includes upsampling invocation option to restore image size.</p>
+<div style="break-before: page; page-break-before: always;"></div><p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/img-compress">https://github.com/athletedecoded/img-compress</a></p>
+<p><img src="https://github.com/athletedecoded/img-compress/actions/workflows/deploy.yml/badge.svg" alt="CI/CD Pipeline" /></p>
+<h1 id="ids721-spring-2023-project-4---image-compression-for-big-data"><a class="header" href="#ids721-spring-2023-project-4---image-compression-for-big-data">IDS721 Spring 2023 Project 4 - Image Compression for Big Data</a></h1>
+<p>Image Compression for Big Data using EFS x Lambda x Rust. Uses downsampling + filter to perform inplace image compression in parallel and reduce the memory cost of big image data storage. Includes upsampling invocation option to restore image size.</p>
 <p><img src="./assets/img-comp.png" alt="image" /></p>
-<h2 id="useage"><a class="header" href="#useage">Useage</a></h2>
+<h2 id="useage-1"><a class="header" href="#useage-1">Useage</a></h2>
 <pre><code>cargo lambda invoke --remote \
     --data-ascii '{&quot;dir&quot;: &quot;imgs&quot;, &quot;scale_op&quot;: &quot;down&quot;, &quot;scale_factor&quot;: 2, &quot;filter&quot;: &quot;Gaussian&quot;}' \
     --output-format json \
@@ -431,10 +433,11 @@ ls
 <li><a href="https://docs.aws.amazon.com/efs/latest/ug/mounting-fs-mount-helper-ec2-linux.html">Mount EC2 to EFS</a></li>
 <li><a href="https://github.com/noahgift/rust-mlops-template/tree/main/onnx-efs-lambda">Noah's Repo</a></li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="automated-s3-backup-with-aws-x-rust"><a class="header" href="#automated-s3-backup-with-aws-x-rust">Automated S3 Backup with AWS x Rust</a></h1>
-<p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/s3-backup">https://github.com/athletedecoded/s3-backup</a></p>
+<div style="break-before: page; page-break-before: always;"></div><p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/s3-backup">https://github.com/athletedecoded/s3-backup</a></p>
+<p><img src="https://github.com/athletedecoded/s3-backup/actions/workflows/deploy.yml/badge.svg" alt="CI/CD Pipeline" /></p>
+<h1 id="ids721-spring-2023-project-3---rust-serverless-with-aws"><a class="header" href="#ids721-spring-2023-project-3---rust-serverless-with-aws">IDS721 Spring 2023 Project 3 - Rust Serverless with AWS</a></h1>
 <p>Automated serverless S3 backup using AWS Lambda x Rust</p>
-<p><img src="./assets/s3-backup.png" alt="image" /></p>
+<p><img src="./assets/arch.png" alt="image" /></p>
 <h2 id="what-i-learnt"><a class="header" href="#what-i-learnt">What I Learnt</a></h2>
 <ul>
 <li>Deploying AWS serverless using Lambda x S3 trigger</li>
@@ -494,7 +497,7 @@ $ make deploy
 <li>From the AWS Lambda Console &gt; Functions &gt; s3-backup &gt; Configuration &gt; Permissions &gt; change Execution role to preconfigured &quot;S3xLambdaAccessRole&quot;</li>
 <li>From the AWS Lambda Console &gt; Functions &gt; s3-backup &gt; Configuration &gt; Environment variables &gt; set the following env variables coinciding with S3 Access Point ARNs: <code>SRC_AP_ARN</code>, <code>DEST_AP_ARN</code>, <code>RUBBISH_AP_ARN</code></li>
 </ol>
-<p><em>NB: Access Point ARNs will be of the format arn:aws:s3:<region>:<aws-id>:accesspoint/<access-point-name></em></p>
+<p><em>NB: Access Point ARNs will be of the format arn:aws:s3:[region]:[aws-id]:accesspoint/[access-point-name]</em></p>
 <h2 id="references-3"><a class="header" href="#references-3">References</a></h2>
 <ul>
 <li><a href="https://www.cargo-lambda.info/">Cargo Lambda for Rust</a></li>
@@ -503,15 +506,15 @@ $ make deploy
 <li><a href="https://github.com/aws-samples/serverless-rust-demo/">AWS Serverless Rust Demo</a></li>
 <li><a href="https://aws.amazon.com/getting-started/hands-on/amazon-s3-object-lambda-to-dynamically-watermark-images/">AWS Tutorial: S3 Object Lambda</a></li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="distroless--containerized-api-proxy-for-huggingface"><a class="header" href="#distroless--containerized-api-proxy-for-huggingface">Distroless &amp; Containerized API Proxy for HuggingFace</a></h1>
-<p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/hf-micro">https://github.com/athletedecoded/hf-micro</a></p>
-<p>The <a href="https://github.com/huggingface/huggingface_hub">HuggingFace Hub</a> is implemented as a Python wrapper around the HuggingFace API Endpoints. This project is a distroless and containerized Rust microservice that acts as an API proxy for the HuggingFace API Endpoints. Github Actions allows for automated CI/CD to Azure Containers.</p>
+<div style="break-before: page; page-break-before: always;"></div><p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/hf-micro">https://github.com/athletedecoded/hf-micro</a></p>
+<p><img src="https://github.com/athletedecoded/hf-micro/actions/workflows/deploy.yml/badge.svg" alt="CI/CD Pipeline" /></p>
+<h1 id="ids721-spring-2023-project-2---rust-containerized-microservice"><a class="header" href="#ids721-spring-2023-project-2---rust-containerized-microservice">IDS721 Spring 2023 Project 2 - Rust Containerized Microservice</a></h1>
+<p>The <a href="https://github.com/huggingface/huggingface_hub">HuggingFace Hub</a> is implemented as a Python wrapper around the HuggingFace API Endpoints. This project is a dockerized Rust microservice that acts as an API proxy for the HuggingFace API Endpoints. </p>
 <p><img src="./assets/hf-micro.png" alt="image" /></p>
 <h2 id="what-i-learnt-1"><a class="header" href="#what-i-learnt-1">What I Learnt</a></h2>
 <ul>
 <li>Configuring reqwest for GET, POST, PUT, DELETE requests</li>
 <li>Certifying HTTPS using reqwest from within a Docker image -- I spent days debugging and exhausting certification solutions and it all came down to enabling the rustls-tls feature in reqwest and either installing debian ca-certificates or mounting them to Docker at runtime 🤯</li>
-<li>CI/CD with Github Actions to automate Azure container deployment</li>
 </ul>
 <h2 id="setup-1"><a class="header" href="#setup-1">Setup</a></h2>
 <p><strong>Install</strong></p>
@@ -537,10 +540,6 @@ $ make deploy
 </ol>
 <pre><code>$ make build
 </code></pre>
-<p><strong>Gotchas</strong> if you encounter a build failure on &quot;ERROR [internal] load metadata ...&quot; then run</p>
-<pre><code>$ rm  ~/.docker/config.json 
-$ make build
-</code></pre>
 <ol start="3">
 <li>Run Docker image</li>
 </ol>
@@ -556,13 +555,6 @@ $ openssl req -x509 -newkey rsa:4096 -keyout ./certs/key.pem -out ./certs/cert.p
 <p>Then launch Docker image with mounted certificates</p>
 <pre><code>$ make mntcerts
 </code></pre>
-<p><strong>Deploy to Azure</strong></p>
-<ol>
-<li>Provision an Azure Container App and set repository PAT, AZURE_CREDENTIALS secrets according to this <a href="https://github.com/athletedecoded/distroless-rust-azure">repo docs</a></li>
-<li>Ensure Container App <code>ingress</code> setting matches port &quot;8080&quot;</li>
-<li>Set a repository secret <code>HFAT</code> to your HuggingFace Access Token</li>
-<li><code>git push origin deploy-distro</code> then manually trigger workflow from GitHub Actions</li>
-</ol>
 <h2 id="useage--endpoints"><a class="header" href="#useage--endpoints">Useage &amp; Endpoints</a></h2>
 <p>Supported endpoints to base URL https://localhost:8080</p>
 <p><strong>GET /</strong> -- Homepage</p>
@@ -620,8 +612,9 @@ CI/CD &amp; Binary Release</li>
 <li><a href="https://crates.io/crates/reqwest">reqwest crate docs</a></li>
 <li><a href="https://smallstep.com/blog/automate-docker-ssl-tls-certificates/">TLS Debugging Docker</a></li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="rusty-pipe-wip"><a class="header" href="#rusty-pipe-wip">Rusty Pipe [WiP]</a></h1>
-<p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/rusty-pipe">https://github.com/athletedecoded/rusty-pipe</a></p>
+<div style="break-before: page; page-break-before: always;"></div><p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/rusty-pipe">https://github.com/athletedecoded/rusty-pipe</a></p>
+<p><img src="https://github.com/athletedecoded/rusty-pipe/actions/workflows/az_deploy.yml/badge.svg" alt="CI/CD Pipeline" /></p>
+<h1 id="rusty-pipe-wip"><a class="header" href="#rusty-pipe-wip">Rusty Pipe [WiP]</a></h1>
 <p>E2E ML Pipeline -- from data to distroless deploy</p>
 <p><img src="./assets/rusty-pipe.png" alt="image" /></p>
 <h2 id="train"><a class="header" href="#train">Train</a></h2>
@@ -701,9 +694,15 @@ Load testing</li>
 <li><a href="https://github.com/nogibjj/rusty-deploy">Rusty Deploy example</a></li>
 <li><a href="https://github.com/LaurentMazare/tch-rs/tree/main/examples">tch-rs examples</a></li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="cicd-data-science-with-rust"><a class="header" href="#cicd-data-science-with-rust">CI/CD Data Science with Rust</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/rusty-ds">https://github.com/athletedecoded/rusty-ds</a></p>
+<h1 id="cicd-data-science-with-rust"><a class="header" href="#cicd-data-science-with-rust">CI/CD Data Science with Rust</a></h1>
+<p><a href="https://github.com/athletedecoded/rusty-ds/actions/workflows/CICD.yml"><img src="https://github.com/athletedecoded/rusty-ds/actions/workflows/CICD.yml/badge.svg" alt="CI/CD Pipeline" /></a></p>
+<p><img src="https://byob.yarr.is/athletedecoded/rusty-ds/stable" alt="Stable" />
+<img src="https://byob.yarr.is/athletedecoded/rusty-ds/beta" alt="Beta" />
+<img src="https://byob.yarr.is/athletedecoded/rusty-ds/nightly" alt="Nightly" /></p>
 <p>CLI and Notebook EDA using polars/plotters/evcxr + CI/CD distroless deployment</p>
-<p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/rusty-ds">https://github.com/athletedecoded/rusty-ds</a></p>
+<p>&quot;Futureproofs&quot; by testing build across rust releases: stable, beta, nightly</p>
+<p><strong><a href="https://youtu.be/ZJXYvAEZFbM">DEMO</a></strong></p>
 <h2 id="setup-2"><a class="header" href="#setup-2">Setup</a></h2>
 <pre><code># Install Rust
 make install
@@ -731,6 +730,7 @@ cargo run summary --path &lt;/path/to/data&gt;
 # ex. cargo run summary --path ./data/sample.json
 </code></pre>
 <p><strong>Plot</strong></p>
+<p><img src="./plots/scatter.png" alt="image" /></p>
 <pre><code>cargo run plot --path &lt;/path/to/data&gt; &lt;--headers&gt; --x &lt;col_name&gt; --y &lt;col_name&gt;
 # ex. cargo run plot --path ./data/sample.csv --headers --x fats_g --y calories
 # ex. cargo run plot --path ./data/sample.json --x fats_g --y calories
@@ -752,7 +752,7 @@ cargo run summary --path &lt;/path/to/data&gt;
 <h2 id="cicd-1"><a class="header" href="#cicd-1">CI/CD</a></h2>
 <p>On git push/pull request the CI/CD flow is triggered using Github Actions:</p>
 <ol>
-<li>Install and validate Rust toolchain</li>
+<li>Install and validate Rust toolchain for each of stable/beta/nightly release</li>
 <li>Format and lint code</li>
 <li>Run unit tests</li>
 <li>Build binary release</li>
@@ -760,6 +760,7 @@ cargo run summary --path &lt;/path/to/data&gt;
 <li>Build distroless rusty-ds image</li>
 <li>Push image to <a href="https://github.com/athletedecoded?tab=packages">Github Container Registry</a></li>
 </ol>
+<p>NB: To build and push to GHCR, uncomment section in <code>.github/workflows/CICD.yml</code></p>
 <h2 id="todos-2"><a class="header" href="#todos-2">ToDos</a></h2>
 <ul>
 <li><input disabled="" type="checkbox"/>
