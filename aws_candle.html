@@ -1,0 +1,434 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Candle Cookbook CLI for AWS - rustfolio</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="rustfolio.html"><strong aria-hidden="true">1.</strong> Rustfolio</a></li><li class="chapter-item expanded "><a href="s3_cli.html"><strong aria-hidden="true">2.</strong> AWS S3 CLI in Rust</a></li><li class="chapter-item expanded "><a href="img_comp.html"><strong aria-hidden="true">3.</strong> EFS Image Compression</a></li><li class="chapter-item expanded "><a href="s3_backup.html"><strong aria-hidden="true">4.</strong> Automated S3 Backup w Serverless Rust</a></li><li class="chapter-item expanded "><a href="hf_micro.html"><strong aria-hidden="true">5.</strong> Dockerized API Proxy for HuggingFace</a></li><li class="chapter-item expanded "><a href="rusty_pipe.html"><strong aria-hidden="true">6.</strong> E2E Distroless ML Pipeline</a></li><li class="chapter-item expanded "><a href="rusty_ds.html"><strong aria-hidden="true">7.</strong> Rust for Data Science</a></li><li class="chapter-item expanded "><a href="aws_candle.html" class="active"><strong aria-hidden="true">8.</strong> Candle Cookbook CLI for AWS</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">rustfolio</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/aws-candle">https://github.com/athletedecoded/aws-candle</a></p>
+<p><a href="https://github.com/athletedecoded/aws-candle/archive/refs/tags/v.0.0.1.zip"><img src="https://github.com/athletedecoded/aws-candle/actions/workflows/CICD.yml/badge.svg" alt="CI/CD Pipeline" /> <img src="https://img.shields.io/badge/Download%20Latest-v.0.0.1-blue.svg" alt="Download Latest" /></a></p>
+<h1 id="aws-candle-cli-tool"><a class="header" href="#aws-candle-cli-tool">AWS Candle CLI Tool</a></h1>
+<p>A Rust CLI tool to support <a href="https://github.com/nogibjj/candle-cookbook/tree/main">Candle Cookbook</a> on AWS built using the <a href="https://github.com/awslabs/aws-sdk-rust">AWS SDK for Rust</a> </p>
+<p><img src="./assets/aws-cli.png" alt="Image" /></p>
+<p>Jump to:</p>
+<ul>
+<li><a href="#setup">Setup</a></li>
+<li><a href="#cli-commands">CLI Commands</a></li>
+<li><a href="#model-sources">Model Sources</a></li>
+</ul>
+<h2 id="setup"><a class="header" href="#setup">Setup</a></h2>
+<ol>
+<li>
+<p>Configure an <a href="https://aws.amazon.com/ec2/instance-types/">EC2 instance</a> depending on your model target and memory requirements. For a GPU Deep Learning enabled instance follow the <a href="https://nogibjj.github.io/candle-cookbook/aws/hello-aws.html">Hello, Candle on AWS! tutorial</a></p>
+</li>
+<li>
+<p>Create an AWS IAM User Policy &quot;Candle-Cli&quot; with <code>AmazonS3FullAccess</code> and <code>AmazonEC2FullAccess</code> permissions</p>
+</li>
+<li>
+<p>Create an access key for your &quot;Candle-Cli&quot; user</p>
+</li>
+<li>
+<p>Create <code>.env</code> file and configure with AWS credentials and EC2 Key Pair</p>
+</li>
+</ol>
+<pre><code># $touch .env
+AWS_ACCESS_KEY_ID=&lt;YOUR_ACCESS_KEY&gt;
+AWS_SECRET_ACCESS_KEY=&lt;YOUR_ACCESS_SECRET&gt;
+AWS_DEFAULT_REGION=&lt;YOUR_AWS_REGION&gt;
+EC2_KEY=PATH/TO/EC2_KEY_PAIR.pem
+</code></pre>
+<h2 id="cli-commands"><a class="header" href="#cli-commands">CLI Commands</a></h2>
+<h3 id="list-resources"><a class="header" href="#list-resources">List Resources</a></h3>
+<p>Args:</p>
+<ul>
+<li>--s3 ~ flag to list s3 resources</li>
+<li>--ec2 ~ flag to list ec2 resources and status</li>
+</ul>
+<pre><code># To list simultaneously
+$ cargo run list --s3 --ec2
+</code></pre>
+<h3 id="ec2-instance-actions"><a class="header" href="#ec2-instance-actions">EC2 Instance Actions</a></h3>
+<p>Args:</p>
+<ul>
+<li>--id ~ instance id</li>
+<li>--action:
+<ul>
+<li>start: start instance</li>
+<li>stop: stop instance</li>
+<li>endpoint: get public endpoint</li>
+</ul>
+</li>
+</ul>
+<pre><code>$ cargo run instance --id &lt;INSTANCE_ID&gt; --action &lt;start|stop|endpoint&gt;
+</code></pre>
+<h3 id="ssh-connect-to-ec2-instance"><a class="header" href="#ssh-connect-to-ec2-instance">SSH Connect to EC2 Instance</a></h3>
+<p>Quick Tip: first run <code>cargo run list --ec2</code> to confirm instance is running!</p>
+<p>Args:</p>
+<ul>
+<li>--id ~ instance id</li>
+<li>--mnt ~ mount local model directory to EC2 on launch</li>
+</ul>
+<pre><code>$ cargo run connect --id &lt;INSTANCE_ID&gt;
+
+# To remove mount dir to free up memory
+ubuntu@ip$ rm -r &lt;MNT_DIR&gt;
+
+# To close SSH tunnel
+ubuntu@ip$ exit
+
+# Make sure to stop your EC2 instance to avoid charges
+$ cargo run instance --id &lt;INSTANCE_ID&gt; --action stop
+</code></pre>
+<h3 id="s3-bucket-actions"><a class="header" href="#s3-bucket-actions">S3 Bucket Actions</a></h3>
+<p>Args:</p>
+<ul>
+<li>--name ~ bucket name</li>
+<li>--action:
+<ul>
+<li>list: list objects in the bucket</li>
+<li>create: create new bucket with name --name</li>
+<li>delete: delete bucket with name --name</li>
+</ul>
+</li>
+</ul>
+<pre><code>$ cargo run bucket --name &lt;BUCKET_NAME&gt; --action &lt;list|create|delete&gt;
+</code></pre>
+<h3 id="s3-object-actions"><a class="header" href="#s3-object-actions">S3 Object Actions</a></h3>
+<p>Args</p>
+<ul>
+<li>--bucket ~ bucket name -- NB: Will create bucket if DNE</li>
+<li>--key ~ object key or path/to/file for --action upload</li>
+<li>--action:
+<ul>
+<li>upload: upload local file as bucket object</li>
+<li>delete: delete object with key --key</li>
+<li>get: download object with key --key to ./root</li>
+</ul>
+</li>
+</ul>
+<pre><code>$ cargo run object --bucket &lt;bucket_name&gt; --key &lt;object_key&gt; --action &lt;upload|delete|get&gt;&quot;
+# ex: cargo run object --bucket my-bucket --key ./test/test.png --action upload
+# ex: cargo run object --bucket my-bucket --key test.png --action get
+</code></pre>
+<h2 id="model-sources"><a class="header" href="#model-sources">Model Sources</a></h2>
+<p>The AWS Candle CLI is intended to support multiple workflows for building and executing Candle binaries.</p>
+<p><strong>Note:</strong> The first execution of a binary may take a while to run as the files have to be collected. Subsequent runs should execute much faster.</p>
+<ul>
+<li><a href="#build-and-run-binaries-on-ec2">Build and run binaries on EC2</a></li>
+<li><a href="#mount-local-binary-directory-to-ec2">Mount local binary directory to EC2</a></li>
+<li><a href="#copy-your-s3-models-to-ec2">Copy your S3 model objects to EC2</a></li>
+<li><a href="#download-prebuilt-binaries">Download prebuilt model binaries</a></li>
+</ul>
+<h3 id="build-and-run-binaries-on-ec2"><a class="header" href="#build-and-run-binaries-on-ec2">Build and run binaries on EC2</a></h3>
+<ol>
+<li>Complete the <a href="https://nogibjj.github.io/candle-cookbook/aws/hello-aws.html">Hello, Candle on AWS</a> or <a href="https://nogibjj.github.io/candle-cookbook/aws/jenkins-pipeline.html">CodePipeline + Jenkins</a> tutorials to build binaries on your EC2 instance.</li>
+</ol>
+<p><strong>Note:</strong> You can replace skip the &quot;Connect to EC2 via SSH&quot; step and connect through the CLI tool instead!</p>
+<pre><code># List your EC2 instances
+$ cargo run list --ec2
+
+# Connect to EC2
+$ cargo run instance --id &lt;INSTANCE_ID&gt; --action start
+$ cargo run connect --id &lt;INSTANCE_ID&gt;
+
+# Complete https://nogibjj.github.io/candle-cookbook/aws/hello-aws.html tutorial
+# Remember to skip the &quot;Connect to EC2 via SSH&quot; step
+
+# Instantly run models from the remote EC2 terminal
+ubuntu@ip$ ./quantized --prompt &quot;who invented the lightbulb&quot;
+
+# Exit the SSH
+ubuntu@ip$ exit
+
+# Stop your instance
+cargo run instance --id &lt;INSTANCE_ID&gt; --action stop
+</code></pre>
+<h3 id="mount-local-binary-directory-to-ec2"><a class="header" href="#mount-local-binary-directory-to-ec2">Mount local binary directory to EC2</a></h3>
+<p>You can mount a local directory of model binaries when you connect to your EC2 instance with the <code>--mnt</code> flag</p>
+<pre><code># List your EC2 instances
+$ cargo run list --ec2
+
+# Connect to your EC2 instance + mount local model directory
+$ cargo run connect --id &lt;INSTANCE_ID&gt; --mnt &lt;PATH/TO/MNT_DIR&gt;
+
+# To remove mount dir to free up memory
+ubuntu@ip$ rm -r &lt;MNT_DIR&gt;
+
+# Exit SSH
+ubuntu@ip$ exit
+
+# Stop your instance
+cargo run instance --id &lt;INSTANCE_ID&gt; --action stop
+</code></pre>
+<p><strong>Note:</strong> You can build Candle binaries locally by following the <a href="https://nogibjj.github.io/candle-cookbook/local/hello-candle.html">Hello, Candle! tutorial</a>.</p>
+<h3 id="copy-your-s3-models-to-ec2"><a class="header" href="#copy-your-s3-models-to-ec2">Copy your S3 models to EC2</a></h3>
+<p>If you have Candle binaries stored as S3 objects or artifacts -- like if you completed the <a href="https://nogibjj.github.io/candle-cookbook/aws/hello-aws.html">Hello, Candle on AWS!</a> -- then you can copy them across to your EC2 instance.</p>
+<p><strong>Note:</strong> Ensure your EC2 is configured with IAM User Role with <code>AmazonFullS3Access</code> like in <a href="https://nogibjj.github.io/candle-cookbook/aws/hello-aws.html">Hello, Candle on AWS!</a></p>
+<pre><code># List your S3 buckets and EC2 instances
+$ cargo run list --s3 --ec2
+
+# List your S3 objects
+$ cargo run bucket --name &lt;BUCKET_NAME&gt; --action list
+
+# Connect to EC2
+$ cargo run instance --id &lt;INSTANCE_ID&gt; --action start
+$ cargo run connect --id &lt;INSTANCE_ID&gt;
+
+# Check AWS CLI is installed
+ubuntu@ip$ aws --version
+
+# If not install AWS CLI
+ubuntu@ip$ curl &quot;https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip&quot; -o &quot;awscliv2.zip&quot;
+ubuntu@ip$ unzip awscliv2.zip
+ubuntu@ip$ sudo ./aws/install
+ubuntu@ip$ rm -r awscliv2.zip
+
+# Check install
+ubuntu@ip$ aws --version
+
+# Copy individual models from S3 to EC2
+ubuntu@ip$ aws s3 cp s3://MY_BUCKET/model .
+
+# Copy the entire bucket of model objects/artifacts from S3 to EC2
+ubuntu@ip$ aws s3 sync s3://MY_BUCKET .
+
+# Exit the SSH
+ubuntu@ip$ exit
+
+# Stop your instance
+cargo run instance --id &lt;INSTANCE_ID&gt; --action stop
+</code></pre>
+<h3 id="download-prebuilt-binaries"><a class="header" href="#download-prebuilt-binaries">Download prebuilt binaries</a></h3>
+<p>Once connected to EC2 you can download run any of the prebuilt binaries available <a href="https://github.com/athletedecoded/cookbook-binaries/tree/main/binaries">here</a>. Make sure to run <code>chmod +x</code> to give EC2 execution permissions!</p>
+<pre><code>wget -O mistral-cudnn https://github.com/athletedecoded/cookbook-binaries/raw/main/binaries/cudnn/mistral?download=
+chmod +x mistral-cudnn
+./mistral-cudnn --prompt &quot;who invented the lightbulb&quot;
+</code></pre>
+<h2 id="aws-candle-cli-binary"><a class="header" href="#aws-candle-cli-binary">AWS Candle CLI Binary</a></h2>
+<p><strong>Build Executable Locally</strong></p>
+<pre><code>$ make release
+</code></pre>
+<p><strong>Run AWS Candle CLI Locally</strong></p>
+<pre><code>$ cd target/release
+$ ./aws-candle &lt;COMMANDS&gt;
+</code></pre>
+<h2 id="references"><a class="header" href="#references">References</a></h2>
+<ul>
+<li><a href="https://github.com/awslabs/aws-sdk-rust">AWS SDK for Rust</a></li>
+<li><a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html#cli-configure-files-where">AWS Toolkit Credential Profile</a></li>
+<li><a href="https://docs.aws.amazon.com/toolkit-for-vscode/latest/userguide/setup-credentials.html">AWS Credentials for VS Code</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="rusty_ds.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="rusty_ds.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
