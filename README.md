@@ -4,7 +4,7 @@
 
 Check it out live @ [https://athletedecoded.com/rustfolio](https://athletedecoded.com/rustfolio)
 
-Learning by building Rust for MLOps projects at Duke Univeristy with [Noah Gift](https://github.com/noahgift).
+Rust x MLOps Repo @ [https://github.com/athletedecoded/rust-mlops](https://github.com/athletedecoded/rust-mlops)
 
 
 ### To use this mdbook template

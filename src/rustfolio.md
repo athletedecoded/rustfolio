@@ -1,11 +1,9 @@
 # Rustfolio 🦀
 
-Github [@athletedecoded](https://github.com/athletedecoded)
+Rustfolio Repo @ [https://github.com/athletedecoded/rustfolio](https://github.com/athletedecoded/rustfolio)
 
-Learning by building Rust for MLOps projects at Duke Univeristy with [Noah Gift](https://github.com/noahgift).
+Rust x MLOps Repo @ [https://github.com/athletedecoded/rust-mlops](https://github.com/athletedecoded/rust-mlops)
 
-* [Rust MLOps Projects](https://github.com/athletedecoded/rust-mlops)
-* [Rust Data Engineering Projects](https://github.com/athletedecoded/rust-data-engineering)
 
 ### To use this mdbook template
 
