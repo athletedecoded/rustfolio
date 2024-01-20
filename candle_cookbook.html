@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Dockerized API Proxy for HuggingFace - rustfolio</title>
+        <title>Candle Cookbook - rustfolio</title>
 
 
         <!-- Custom HTML head -->
@@ -88,7 +88,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="rustfolio.html"><strong aria-hidden="true">1.</strong> Rustfolio</a></li><li class="chapter-item expanded "><a href="s3_cli.html"><strong aria-hidden="true">2.</strong> AWS S3 CLI in Rust</a></li><li class="chapter-item expanded "><a href="img_comp.html"><strong aria-hidden="true">3.</strong> EFS Image Compression</a></li><li class="chapter-item expanded "><a href="s3_backup.html"><strong aria-hidden="true">4.</strong> Automated S3 Backup w Serverless Rust</a></li><li class="chapter-item expanded "><a href="hf_micro.html" class="active"><strong aria-hidden="true">5.</strong> Dockerized API Proxy for HuggingFace</a></li><li class="chapter-item expanded "><a href="rusty_pipe.html"><strong aria-hidden="true">6.</strong> E2E Distroless ML Pipeline</a></li><li class="chapter-item expanded "><a href="rusty_ds.html"><strong aria-hidden="true">7.</strong> Rust for Data Science</a></li><li class="chapter-item expanded "><a href="candle_cookbook.html"><strong aria-hidden="true">8.</strong> Candle Cookbook</a></li><li class="chapter-item expanded "><a href="aws_candle.html"><strong aria-hidden="true">9.</strong> Candle Cookbook CLI for AWS</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="rustfolio.html"><strong aria-hidden="true">1.</strong> Rustfolio</a></li><li class="chapter-item expanded "><a href="s3_cli.html"><strong aria-hidden="true">2.</strong> AWS S3 CLI in Rust</a></li><li class="chapter-item expanded "><a href="img_comp.html"><strong aria-hidden="true">3.</strong> EFS Image Compression</a></li><li class="chapter-item expanded "><a href="s3_backup.html"><strong aria-hidden="true">4.</strong> Automated S3 Backup w Serverless Rust</a></li><li class="chapter-item expanded "><a href="hf_micro.html"><strong aria-hidden="true">5.</strong> Dockerized API Proxy for HuggingFace</a></li><li class="chapter-item expanded "><a href="rusty_pipe.html"><strong aria-hidden="true">6.</strong> E2E Distroless ML Pipeline</a></li><li class="chapter-item expanded "><a href="rusty_ds.html"><strong aria-hidden="true">7.</strong> Rust for Data Science</a></li><li class="chapter-item expanded "><a href="candle_cookbook.html" class="active"><strong aria-hidden="true">8.</strong> Candle Cookbook</a></li><li class="chapter-item expanded "><a href="aws_candle.html"><strong aria-hidden="true">9.</strong> Candle Cookbook CLI for AWS</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -173,134 +173,66 @@
 
                 <div id="content" class="content">
                     <main>
-                        <p><strong>Project Repo:</strong> <a href="https://github.com/athletedecoded/hf-micro">https://github.com/athletedecoded/hf-micro</a></p>
-<p><img src="https://github.com/athletedecoded/hf-micro/actions/workflows/az_deploy.yml/badge.svg" alt="CI/CD Pipeline" /></p>
-<h1 id="ids721-spring-2023-project-2---rust-containerized-microservice"><a class="header" href="#ids721-spring-2023-project-2---rust-containerized-microservice">IDS721 Spring 2023 Project 2 - Rust Containerized Microservice</a></h1>
-<p>The <a href="https://github.com/huggingface/huggingface_hub">HuggingFace Hub</a> is implemented as a Python wrapper around the HuggingFace API Endpoints. This project is a distroless and containerized Rust microservice that acts as an API proxy for the HuggingFace API Endpoints. Github Actions allows for automated CI/CD to Azure Containers.</p>
-<p><img src="./assets/hf-micro.png" alt="image" /></p>
-<h2 id="what-i-learnt"><a class="header" href="#what-i-learnt">What I Learnt</a></h2>
+                        <p><strong>Project Repo:</strong> <a href="https://github.com/nogibjj/candle-cookbook">https://github.com/nogibjj/candle-cookbook</a></p>
+<h1 id="candle-cookbook"><a class="header" href="#candle-cookbook">Candle Cookbook</a></h1>
+<p><img src="https://github.com/nogibjj/candle-cookbook/actions/workflows/deploy.yml/badge.svg" alt="Deploy" /></p>
+<p>Cooking live @ <a href="https://nogibjj.github.io/candle-cookbook/">https://nogibjj.github.io/candle-cookbook/</a></p>
+<h2 id="-our-mission"><a class="header" href="#-our-mission">🚀 Our Mission:</a></h2>
+<p>Democratize access to state of the art AI models.</p>
+<h2 id="-our-principles"><a class="header" href="#-our-principles">⭐ Our Principles:</a></h2>
+<p>🫱🏾‍🫲🏼 <strong>Trust</strong> ~ ethically sourced data and end-to-end transparency.</p>
+<p>🔒 <strong>Privacy</strong> ~ secure, on-device inference without data sharing.</p>
+<p>🌏 <strong>Sustainability</strong> ~ optimize efficiency to minimize our carbon footprint.</p>
+<hr>
+<h2 id="-roadmap"><a class="header" href="#-roadmap">🛣️ Roadmap</a></h2>
+<p>Our goal is to document each stage of a fully transparent LLM development cycle</p>
 <ul>
-<li>Configuring reqwest for GET, POST, PUT, DELETE requests</li>
-<li>Certifying HTTPS using reqwest from within a Docker image -- I spent days debugging and exhausting certification solutions and it all came down to enabling the rustls-tls feature in reqwest and either installing debian ca-certificates or mounting them to Docker at runtime 🤯</li>
-<li>CI/CD with Github Actions to automate Azure container deployment</li>
+<li><input disabled="" type="checkbox"/>
+Publish MVP Candle Cookbook</li>
+<li><input disabled="" type="checkbox"/>
+Ethically source and construct an openly available LLM dataset</li>
+<li><input disabled="" type="checkbox"/>
+Build a Candle-based LLM from scratch</li>
+<li><input disabled="" type="checkbox"/>
+Customize LLM with finetuning</li>
+<li><input disabled="" type="checkbox"/>
+CI/CD deployment of LLM</li>
 </ul>
-<h2 id="setup"><a class="header" href="#setup">Setup</a></h2>
-<p><strong>Install</strong></p>
-<pre><code>$ make install
-</code></pre>
-<p><strong>HuggingFace Access Token</strong></p>
-<ol>
-<li>Generate a <a href="https://huggingface.co/docs/hub/security-tokens">HuggingFace personal access token</a> with write permissions</li>
-<li>Configure environment variables below per choice of launching locally or within Docker</li>
-</ol>
-<p><strong>To launch locally</strong></p>
-<ol>
-<li>Rename <code>SAMPLE_ENV</code> to <code>.env</code> and save</li>
-<li>Set your HF personal access token in <code>.env</code></li>
-<li>Run local microservice on localhost:8080</li>
-</ol>
-<pre><code>$ make run
-</code></pre>
-<p><strong>To launch within Docker</strong></p>
-<ol>
-<li>Set your HF personal access token in <a href="./hf-micro/Makefile">Makefile (line 2)</a></li>
-<li>Build Docker image</li>
-</ol>
-<pre><code>$ make build
-</code></pre>
-<p><strong>Gotchas</strong> if you encounter a build failure on &quot;ERROR [internal] load metadata ...&quot; then run</p>
-<pre><code>$ rm  ~/.docker/config.json 
-$ make build
-</code></pre>
-<ol start="3">
-<li>Run Docker image</li>
-</ol>
-<pre><code>$ make rundocker
-</code></pre>
-<p><strong>Docker Debugging CA-Certificates</strong></p>
-<p>If you have CA-certification issues you may need to manually mount self-signed certificates to the Docker image instead. To do this first generate .pem certificate</p>
-<pre><code># make local certs dir
-$ mkdir ./certs
-# generate ca-certificates
-$ openssl req -x509 -newkey rsa:4096 -keyout ./certs/key.pem -out ./certs/cert.pem -sha256 -days 365 -nodes -subj '/CN=localhost'
-</code></pre>
-<p>Then launch Docker image with mounted certificates</p>
-<pre><code>$ make mntcerts
-</code></pre>
-<p><strong>Deploy to Azure</strong></p>
-<ol>
-<li>Provision an Azure Container App and set repository PAT, AZURE_CREDENTIALS secrets according to this <a href="https://github.com/athletedecoded/distroless-rust-azure">repo docs</a></li>
-<li>Ensure Container App <code>ingress</code> setting matches port &quot;8080&quot;</li>
-<li>Set a repository secret <code>HFAT</code> to your HuggingFace Access Token</li>
-<li><code>git push origin deploy-distro</code> then manually trigger workflow from GitHub Actions</li>
-</ol>
-<h2 id="useage--endpoints"><a class="header" href="#useage--endpoints">Useage &amp; Endpoints</a></h2>
-<p>Supported endpoints to base URL https://localhost:8080</p>
-<p><strong>GET /</strong> -- Homepage</p>
-<p><strong>GET /api/account</strong> -- Returns your HuggingFace account info</p>
-<p><strong>POST /api/repo</strong> -- Create a new repository</p>
-<pre><code>```
-POST /api/repo json request body 
-{
-    &quot;type&quot;: &lt;&quot;model&quot;,&quot;dataset&quot; or &quot;spaces&quot;&gt;
-    &quot;name&quot;: &lt;repo_name&gt;,
-    &quot;private&quot;: &lt;true or false&gt;
-}
-```
-</code></pre>
-<p><strong>DELETE /api/repo</strong> -- Delete a repository</p>
-<pre><code>```
-DELETE /api/repo json request body 
-{
-    &quot;type&quot;: &lt;&quot;model&quot;,&quot;dataset&quot; or &quot;spaces&quot;&gt;
-    &quot;name&quot;: &lt;repo_name&gt;
-}
-```
-</code></pre>
-<p><strong>PUT /api/repo</strong> -- Update repository visibility</p>
-<pre><code>```
-PUT /api/repo json request body 
-{
-    &quot;type&quot;: &lt;&quot;model&quot;,&quot;dataset&quot; or &quot;spaces&quot;&gt;
-    &quot;namespace&quot;: &quot;&lt;username&gt;/&lt;repo_name&gt;&quot; eg. &quot;ferris/my_repo&quot;
-    &quot;private&quot;: &lt;true or false&gt;
-}
-```
-</code></pre>
-<h2 id="todos"><a class="header" href="#todos">ToDos</a></h2>
+<hr>
+<h2 id="start-here"><a class="header" href="#start-here">🕯️Start Here</a></h2>
+<p>Welcome! Get familiar with Candle Cookbook by going through some of our favourite introductory tutorials</p>
 <ul>
-<li><input disabled="" type="checkbox" checked=""/>
-Configure GET, POST, DELETE, PUSH routes</li>
-<li><input disabled="" type="checkbox" checked=""/>
-Pass environment variables into Docker per <a href="https://docs.docker.com/compose/environment-variables/set-environment-variables/#set-environment-variables-with-docker-compose-run---env">docs</a></li>
-<li><input disabled="" type="checkbox" checked=""/>
-Debug reqwest x Rust x Docker CA Certificate bug</li>
-<li><input disabled="" type="checkbox" checked=""/>
-Configure Actix logging</li>
-<li><input disabled="" type="checkbox" checked=""/>
-Actix HTTP error response handling</li>
-<li><input disabled="" type="checkbox" checked=""/>
-CI/CD &amp; Binary Release</li>
+<li><a href="./src/local/hello-candle.html">Hello, Candle!</a></li>
+<li><a href="./src/aws/hello-aws.html">Hello, Candle on AWS!</a></li>
+<li><a href="./src/azure/hello-azure.html">Hello, Candle on Azure!</a></li>
 </ul>
-<h2 id="references"><a class="header" href="#references">References</a></h2>
+<p>We also recommend getting familiar with the Official Candle framework and User Guide</p>
 <ul>
-<li><a href="https://github.com/huggingface/huggingface_hub">HuggingFace Hub Python Client</a></li>
-<li><a href="https://huggingface.co/docs/hub/security-tokens">HF access tokens</a></li>
-<li><a href="https://huggingface.co/docs/hub/api">HF Hub REST API Endpoints</a></li>
-<li><a href="https://actix.rs/docs/extractors/">Actix extractors</a></li>
-<li><a href="https://crates.io/crates/reqwest">reqwest crate docs</a></li>
-<li><a href="https://smallstep.com/blog/automate-docker-ssl-tls-certificates/">TLS Debugging Docker</a></li>
+<li><a href="https://github.com/huggingface/candle">Huggingface Candle repo</a></li>
+<li><a href="https://huggingface.github.io/candle/index.html">Candle User Guide</a></li>
 </ul>
+<hr>
+<h2 id="-contributing"><a class="header" href="#-contributing">🌱 Contributing</a></h2>
+<p>We welcome contributions from anyone who aligns with Our Mission and Our Principles.</p>
+<p>To get started as a contributor:</p>
+<ul>
+<li>Read our <a href="./CODE_OF_CONDUCT.html">Code of Conduct</a></li>
+<li>Read the <a href="./CONTRIBUTING.html">Contributor Guidelines</a></li>
+<li>Install Candle Cookbook according to the <a href="./docs/DEV_ENV.html">Developer Setup</a> guide</li>
+</ul>
+<hr>
+<h2 id="-our-team"><a class="header" href="#-our-team">🧑‍🍳 Our Team:</a></h2>
+<p>Get to know our <a href="./TEAM.html">Community Leaders</a></p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="s3_backup.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="rusty_ds.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="rusty_pipe.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="aws_candle.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -310,11 +242,11 @@ CI/CD &amp; Binary Release</li>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="s3_backup.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="rusty_ds.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="rusty_pipe.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="aws_candle.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
