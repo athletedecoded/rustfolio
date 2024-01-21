@@ -16,6 +16,20 @@ Rust x MLOps Repo @ [https://github.com/athletedecoded/rust-mlops](https://githu
 $ make install
 ```
 
+**Sync Project README**
+
+* Copy the [project template](./src/template.md) to create new project `./src/my-project.md`
+* Add project link to `./src/SUMMARY.md` 
+* In `my-project.md` uncomment `**Project Repo:**` and update to project repo url
+
+To sync `my-project.md` with README content in the project repo run:
+
+```
+$ make sync
+```
+
+This will also fetch referenced `./assets/` images and download to local Rustfolio `./src/assets/` folder
+
 **Preview mdbook**
 ```
 $ make serve
@@ -24,6 +38,8 @@ $ make serve
 **Deploy to Github Pages**
 
 Automatic CI/CD via Github Actions on git push. See [.github/workflows/deploy.yml](.github/workflows/deploy.yml)
+
+Note: this will automatically sync project README using `make sync`
 
 ```
 $ git push origin main
