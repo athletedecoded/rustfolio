@@ -183,11 +183,22 @@
 <p><strong>Install mdbook</strong></p>
 <pre><code>$ make install
 </code></pre>
+<p><strong>Sync Project README</strong></p>
+<ul>
+<li>Copy the <a href="./src/template.html">project template</a> to create new project <code>./src/my-project.md</code></li>
+<li>Add project link to <code>./src/SUMMARY.md</code> </li>
+<li>In <code>my-project.md</code> uncomment <code>**Project Repo:**</code> and update to project repo url</li>
+</ul>
+<p>To sync <code>my-project.md</code> with README content in the project repo run:</p>
+<pre><code>$ make sync
+</code></pre>
+<p>This will also fetch referenced <code>./assets/</code> images and download to local Rustfolio <code>./src/assets/</code> folder</p>
 <p><strong>Preview mdbook</strong></p>
 <pre><code>$ make serve
 </code></pre>
 <p><strong>Deploy to Github Pages</strong></p>
 <p>Automatic CI/CD via Github Actions on git push. See <a href=".github/workflows/deploy.yml">.github/workflows/deploy.yml</a></p>
+<p>Note: this will automatically sync project README using <code>make sync</code></p>
 <pre><code>$ git push origin main
 </code></pre>
 <p><strong>Configure Repo for Github Pages</strong></p>
